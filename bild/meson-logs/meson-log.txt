@@ -1,0 +1,20 @@
+Build started at 2018-03-03T19:09:59.295809
+Main binary: /usr/bin/python3
+Python system: Linux
+The Meson build system
+Version: 0.44.1
+Source dir: /home/plugaru/GitHub/wingpanel-indicator-sys-monitor
+Build dir: /home/plugaru/GitHub/wingpanel-indicator-sys-monitor/bild
+Build type: native build
+Project name: sys-monitor
+Sanity testing C compiler: cc
+Is cross compiler: False.
+Sanity check compiler command line: cc /home/plugaru/GitHub/wingpanel-indicator-sys-monitor/bild/meson-private/sanitycheckc.c -o /home/plugaru/GitHub/wingpanel-indicator-sys-monitor/bild/meson-private/sanitycheckc.exe
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/plugaru/GitHub/wingpanel-indicator-sys-monitor/bild/meson-private/sanitycheckc.exe
+Native C compiler: cc (gcc 5.4.0)
