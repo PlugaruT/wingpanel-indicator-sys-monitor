@@ -35,3 +35,6 @@ sudo ninja install
 
 ### TODO:
 Extend this indicator to replace [System Load Indicator](https://launchpad.net/indicator-multiload)
+
+
+_This indicator was inspired from [Monilet](https://github.com/kmal-kenneth/monilet)_
