@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+
+override_dh_auto_clean:
+	dh_clean
+	rm -rf build
+
+override_dh_auto_configure:
+	meson build --prefix=/usr
+
+override_dh_auto_build:
+	ninja -v -C build
+
+override_dh_auto_test:
+	ninja -C build test
+
+override_dh_auto_install:
+	DESTDIR=${CURDIR}/debian/wingpanel-indicator-sys-monitor ninja -C build -v install

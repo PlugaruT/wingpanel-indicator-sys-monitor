@@ -1,74 +1,65 @@
-
 public class SysMonitor.Indicator : Wingpanel.Indicator {
-  const string APPNAME = "wingpanel-indicator-sys-monitor";
-  private Gtk.Label cpu_label;
-  private Gtk.Label mem_label;
-  private Gtk.Grid grid;
-  private CPU cpu;
-  private Memory memory;
+    const string APPNAME = "wingpanel-indicator-sys-monitor";
+    private SysMonitor.Services.CPU cpu;
+    private SysMonitor.Services.Memory memory;
 
-  public Indicator (Wingpanel.IndicatorManager.ServerType server_type) {
-      Object (code_name: APPNAME,
-              display_name: _("Sys-Monitor"),
-              description: _("System monitor indicator that display CPU and RAM usage in wingpanel"));
+    private SysMonitor.Widgets.DisplayWidget display_widget;
+    private SysMonitor.Widgets.PopoverWidget popover_widget;
 
-    this.cpu = new CPU();
-    this.memory = new Memory();
 
-    this.grid = new Gtk.Grid();
-    this.grid.column_spacing = 3;
+    public Indicator (Wingpanel.IndicatorManager.ServerType server_type) {
+        Object (code_name: APPNAME,
+                display_name: _("Sys-Monitor"),
+                description: _("System monitor indicator that display CPU and RAM usage in wingpanel"));
 
-    this.cpu_label = new Gtk.Label("CPU");
-    this.mem_label = new Gtk.Label("MEM");
+        this.cpu = new SysMonitor.Services.CPU();
+        this.memory = new SysMonitor.Services.Memory();
 
-    this.grid.add(this.cpu_label);
-    this.grid.add(this.mem_label);
+        visible = true;
 
-    visible = true;
-    this.update();
-  }
-
-  public override Gtk.Widget get_display_widget () {
-    var spinner = new Gtk.Stack ();
-    spinner.add_named(this.grid, "grid");
-    spinner.margin_top = 4;
-    return spinner;
-  }
-
-  public override Gtk.Widget? get_widget () {
-    return null;
-  }
-
-  public override void opened () {}
-
-  public override void closed () {}
-
-  private void update () {
-    Timeout.add_seconds (1, () => {
-        this.cpu_label.label = this.int_to_string(this.cpu.percentage_used) + "%";
-        this.mem_label.label = this.int_to_string(this.memory.percentage_used) + "%";
-        return true;
-      });
-  }
-
-  private string int_to_string (int number) {
-    if (number < 10){
-      return "0" + number.to_string();
-    } else {
-      return number.to_string();
+        this.update_display_widget();
     }
-  }
+
+    public override Gtk.Widget get_display_widget () {
+        if (this.display_widget == null) {
+            this.display_widget = new SysMonitor.Widgets.DisplayWidget();
+            this.update_display_widget();
+        }
+        return this.display_widget;
+    }
+
+    public override Gtk.Widget? get_widget () {
+        //  if (popover_widget == null) {
+        //    popover_widget = new SysMonitor.Widgets.PopoverWidget (this, this.cpu, this.total_memory, this.used_memory);
+        //    }
+
+        return null;
+    }
+
+    public override void opened () {}
+
+    public override void closed () {}
+
+    private void update_display_widget () {
+        if (this.display_widget != null) {
+            Timeout.add_seconds (1, () => {
+                this.display_widget.set_cpu(this.cpu.percentage_used);
+                this.display_widget.set_mem(this.memory.percentage_used);
+                return true;
+            });
+        }
+    }
 }
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-  debug ("Loading system monitor indicator");
+    debug ("Loading system monitor indicator");
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
-      debug ("Wingpanel is not in session, not loading sys-monitor");
-      return null;
-  }
+        debug ("Wingpanel is not in session, not loading sys-monitor");
+        return null;
+    }
 
-  var indicator = new SysMonitor.Indicator (server_type);
+    var indicator = new SysMonitor.Indicator (server_type);
 
-  return indicator;
+    return indicator;
 }

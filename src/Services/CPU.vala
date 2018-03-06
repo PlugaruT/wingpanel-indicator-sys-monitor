@@ -1,4 +1,4 @@
-public class CPU  : GLib.Object {
+public class SysMonitor.Services.CPU  : GLib.Object {
     private float last_total;
     private float last_used;
 

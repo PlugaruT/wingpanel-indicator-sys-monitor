@@ -1,4 +1,4 @@
-public class Memory  : GLib.Object {
+public class SysMonitor.Services.Memory  : GLib.Object {
     private int _percentage_used;
     private float _total;
     private float _used;

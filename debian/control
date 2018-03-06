@@ -1,0 +1,21 @@
+Source: wingpanel-indicator-sys-monitor
+Maintainer: Tudor Plugaru <plugaru.tudor@gmail.com>
+Section: x11
+Priority: optional
+Build-Depends: debhelper (>= 10),
+               libgirepository1.0-dev,
+               libglib2.0-dev,
+               libgranite-dev,
+               libgtk-3-dev (>= 3.12),
+               libwingpanel-2.0-dev,
+               meson,
+               valac (>= 0.34)
+Standards-Version: 3.9.7
+Homepage: https://github.com/PlugaruT/wingpanel-indicator-sys-monitor
+
+Package: wingpanel-indicator-sys-monitor
+Architecture: any
+Depends: ${misc:Pre-Depends},${misc:Depends}, ${shlibs:Depends}
+Enhances: wingpanel
+Description: Wingpanel System Monitor Indicator
+ System monitor indicator that display CPU and RAM usage in wingpanel
