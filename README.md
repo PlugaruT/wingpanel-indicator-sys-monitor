@@ -1,4 +1,4 @@
-# System monitor wingpanel indicator for elementary OS
+# Wingpanel System Monitor Indicator
 
 Currently the indicator show CPU and RAM usage.
 
