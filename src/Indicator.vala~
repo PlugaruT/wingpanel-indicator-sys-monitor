@@ -29,11 +29,11 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     }
 
     public override Gtk.Widget? get_widget () {
-        if (popover_widget == null) {
-            this.popover_widget = new SysMonitor.Widgets.PopoverWidget ();
-        }
+        //  if (popover_widget == null) {
+        //    popover_widget = new SysMonitor.Widgets.PopoverWidget (this, this.cpu, this.total_memory, this.used_memory);
+        //    }
 
-        return this.popover_widget;
+        return null;
     }
 
     public override void opened () {}
