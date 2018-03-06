@@ -45,6 +45,8 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
             Timeout.add_seconds (1, () => {
                 this.display_widget.set_cpu(this.cpu.percentage_used);
                 this.display_widget.set_mem(this.memory.percentage_used);
+
+                this.popover_widget.update_memory_info(this.memory.used, this.memory.total);
                 return true;
             });
         }

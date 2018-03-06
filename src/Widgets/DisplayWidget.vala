@@ -14,18 +14,18 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     public void set_cpu (int cpu_usage) {
-        cpu_label.set_label(this.format_int(cpu_usage) + "%");
+        cpu_label.set_label(this.format_int(cpu_usage));
     }
 
     public void set_mem (int mem_usage) {
-        mem_label.set_label(this.format_int(mem_usage) + "%");
+        mem_label.set_label(this.format_int(mem_usage));
     }
 
     private string format_int (int number) {
         if (number < 10){
-            return "0" + number.to_string();
+            return "0%i%%".printf (number);
         } else {
-            return number.to_string();
+            return "%i%%".printf (number);
         }
     }
 
