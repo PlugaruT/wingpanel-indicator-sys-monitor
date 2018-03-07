@@ -29,11 +29,11 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     }
 
     public override Gtk.Widget? get_widget () {
-        //  if (popover_widget == null) {
-        //    popover_widget = new SysMonitor.Widgets.PopoverWidget (this, this.cpu, this.total_memory, this.used_memory);
-        //    }
+        if (popover_widget == null) {
+            this.popover_widget = new SysMonitor.Widgets.PopoverWidget ();
+        }
 
-        return null;
+        return this.popover_widget;
     }
 
     public override void opened () {}
@@ -45,6 +45,9 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
             Timeout.add_seconds (1, () => {
                 this.display_widget.set_cpu(this.cpu.percentage_used);
                 this.display_widget.set_mem(this.memory.percentage_used);
+
+                this.popover_widget.update_memory_info(this.memory.used, this.memory.total);
+                this.popover_widget.update_frequency_into(this.cpu.frequency);
                 return true;
             });
         }

@@ -1,0 +1,3 @@
+src/Indicator.vala
+src/Widgets/DisplayWidget.vala
+src/Widgets/PopoverWidget.vala

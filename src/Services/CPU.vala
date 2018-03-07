@@ -3,9 +3,14 @@ public class SysMonitor.Services.CPU  : GLib.Object {
     private float last_used;
 
     private int _percentage_used;
+    private float _frequency;
 
     public int percentage_used {
         get { update_percentage_used (); return _percentage_used; }
+    }
+
+    public float frequency {
+        get { update_frequency (); return _frequency; }
     }
 
     public CPU (){
@@ -28,5 +33,12 @@ public class SysMonitor.Services.CPU  : GLib.Object {
 
         last_used = (float) used;
         last_total = (float) cpu.total;
+    }
+
+    private void update_frequency (){
+        GTop.Cpu cpu;
+        GTop.get_cpu (out cpu);
+
+        _frequency = (float) cpu.frequency;
     }
 }

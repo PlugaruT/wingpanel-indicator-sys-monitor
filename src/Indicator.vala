@@ -47,6 +47,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
                 this.display_widget.set_mem(this.memory.percentage_used);
 
                 this.popover_widget.update_memory_info(this.memory.used, this.memory.total);
+                this.popover_widget.update_swap_info(this.memory.used_swap, this.memory.total_swap);
                 return true;
             });
         }
