@@ -14,11 +14,8 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
     }
 
     construct {
-        title_label = new Gtk.Label(_("System Monitor"));
-        title_label.get_style_context ().add_class ("h4");
+        title_label = new Granite.HeaderLabel(_("System Monitor"));
         title_label.halign = Gtk.Align.CENTER;
-        title_label.margin_start = 12;
-        title_label.margin_end = 12;
 
         ram_value_label = create_value_label();
         swap_value_label = create_value_label();
@@ -33,8 +30,9 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         separator_end.hexpand = true;
 
         var quit_button = new Gtk.ModelButton ();
-        quit_button.hexpand = true;
         quit_button.text = _("Quit");
+        quit_button.hexpand = true;
+        quit_button.get_style_context ().add_class ("menuitem");
 
         var ram_label = create_name_label(_("RAM:"));
         var swap_label = create_name_label(_("SWAP:"));
@@ -73,6 +71,7 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
     private Gtk.Label create_name_label (string label_name) {
         var label = new Gtk.Label(label_name);
         label.halign = Gtk.Align.START;
+        label.get_style_context ().add_class ("menuitem");
         label.margin_start = 9;
         return label;
     }
@@ -80,6 +79,7 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
     private Gtk.Label create_value_label (string label_name = "") {
         var label = new Gtk.Label(label_name);
         label.halign = Gtk.Align.END;
+        label.get_style_context ().add_class ("menuitem");
         label.margin_end = 9;
         return label;
     }
@@ -96,7 +96,11 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         freq_value_label.set_label(frequency.to_string());
     }
 
-    public void update_uptime_info (double uptime) {
-        uptime_value_label.set_label("%.2f %s".printf(uptime, _("hours")));
+    public void update_uptime_info (string uptime) {
+        uptime_value_label.set_label(uptime);
+    }
+
+    public void update_network_info (float up, float down){
+        network_value_label.set_label("UP: %.1f DOWN: %.1f".printf(up, down));
     }
 }

@@ -63,6 +63,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         this.popover_widget.update_swap_info(this.memory.used_swap, this.memory.total_swap);
         this.popover_widget.update_freq_info(this.cpu.frequency);
         this.popover_widget.update_uptime_info(this.system.uptime);
+        this.popover_widget.update_network_info(this.system.network_up, this.system.network_down);
     }
 }
 
