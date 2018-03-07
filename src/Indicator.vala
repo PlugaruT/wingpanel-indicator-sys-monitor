@@ -2,6 +2,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     const string APPNAME = "wingpanel-indicator-sys-monitor";
     private SysMonitor.Services.CPU cpu;
     private SysMonitor.Services.Memory memory;
+    private SysMonitor.Services.System system;
 
     private SysMonitor.Widgets.DisplayWidget display_widget;
     private SysMonitor.Widgets.PopoverWidget popover_widget;
@@ -14,23 +15,24 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
 
         this.cpu = new SysMonitor.Services.CPU();
         this.memory = new SysMonitor.Services.Memory();
+        this.system = new SysMonitor.Services.System();
 
         visible = true;
 
-        this.update_display_widget();
+        this.update ();
     }
 
     public override Gtk.Widget get_display_widget () {
         if (this.display_widget == null) {
             this.display_widget = new SysMonitor.Widgets.DisplayWidget();
-            this.update_display_widget();
+            this.update ();
         }
         return this.display_widget;
     }
 
     public override Gtk.Widget? get_widget () {
-        if (popover_widget == null) {
-            this.popover_widget = new SysMonitor.Widgets.PopoverWidget ();
+        if (this.popover_widget == null) {
+            this.popover_widget = new SysMonitor.Widgets.PopoverWidget (this);
         }
 
         return this.popover_widget;
@@ -40,17 +42,27 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
 
     public override void closed () {}
 
-    private void update_display_widget () {
+    public void hide () {
+        visible = false;
+    }
+
+    private void update () {
         if (this.display_widget != null) {
             Timeout.add_seconds (1, () => {
                 this.display_widget.set_cpu(this.cpu.percentage_used);
                 this.display_widget.set_mem(this.memory.percentage_used);
 
-                this.popover_widget.update_memory_info(this.memory.used, this.memory.total);
-                this.popover_widget.update_swap_info(this.memory.used_swap, this.memory.total_swap);
+                update_popover_widget_data ();
                 return true;
             });
         }
+    }
+
+    private void update_popover_widget_data () {
+        this.popover_widget.update_ram_info(this.memory.used, this.memory.total);
+        this.popover_widget.update_swap_info(this.memory.used_swap, this.memory.total_swap);
+        this.popover_widget.update_freq_info(this.cpu.frequency);
+        this.popover_widget.update_uptime_info(this.system.uptime);
     }
 }
 

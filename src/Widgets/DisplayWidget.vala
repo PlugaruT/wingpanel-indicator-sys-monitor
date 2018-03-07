@@ -22,10 +22,10 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     private string format_int (int number) {
-        if (number < 10){
-            return "0%i%%".printf (number);
+        if (number < 10) {
+            return "0%i%%".printf(number);
         } else {
-            return "%i%%".printf (number);
+            return "%i%%".printf(number);
         }
     }
 

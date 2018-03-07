@@ -24,19 +24,19 @@ public class SysMonitor.Services.Memory  : GLib.Object {
         get { update_total_swap (); return _total_swap; }
     }
 
-    public Memory (){
+    public Memory () {
         this._percentage_used = 0;
         this._used = 0;
         this._total = 0;
     }
 
-    private void update_percentage_used (){
+    private void update_percentage_used () {
         _percentage_used = (int) Math.round((used / total) * 100);
     }
 
     private void update_total () {
         GTop.Memory memory;
-        GTop.get_mem (out memory);
+        GTop.get_mem(out memory);
         _total = (((float) memory.total / 1024) /1024) / 1024;
     }
 

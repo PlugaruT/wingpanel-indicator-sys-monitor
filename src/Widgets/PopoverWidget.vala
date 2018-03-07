@@ -1,10 +1,16 @@
 public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
-    private Gtk.Label title_label;
-    private Gtk.Label memory_usage_label;
-    private Gtk.Label swap_usage_label;
+    private SysMonitor.Indicator indicator;
 
-    public PopoverWidget () {
+    private Gtk.Label title_label;
+    private Gtk.Label ram_value_label;
+    private Gtk.Label swap_value_label;
+    private Gtk.Label freq_value_label;
+    private Gtk.Label uptime_value_label;
+    private Gtk.Label network_value_label;
+
+    public PopoverWidget (SysMonitor.Indicator _indicator) {
         Object (orientation: Gtk.Orientation.VERTICAL);
+        indicator = _indicator;
     }
 
     construct {
@@ -14,40 +20,83 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         title_label.margin_start = 12;
         title_label.margin_end = 12;
 
-        memory_usage_label = new Gtk.Label("");
-        memory_usage_label.halign = Gtk.Align.END;
-        memory_usage_label.margin_end = 6;
+        ram_value_label = create_value_label();
+        swap_value_label = create_value_label();
+        freq_value_label = create_value_label();
+        uptime_value_label = create_value_label();
+        network_value_label = create_value_label();
 
-        swap_usage_label = new Gtk.Label("");
-        swap_usage_label.halign = Gtk.Align.END;
-        swap_usage_label.margin_end = 6;
+        var separator_start = new Wingpanel.Widgets.Separator ();
+        separator_start.hexpand = true;
 
-        var separator = new Wingpanel.Widgets.Separator ();
-        separator.hexpand = true;
+        var separator_end = new Wingpanel.Widgets.Separator ();
+        separator_end.hexpand = true;
 
-        var memory_label = new Gtk.Label(_("RAM:"));
-        memory_label.halign = Gtk.Align.START;
-        memory_label.margin_start = 6;
+        var quit_button = new Gtk.ModelButton ();
+        quit_button.hexpand = true;
+        quit_button.text = _("Quit");
 
-        var swap_label = new Gtk.Label(_("SWAP:"));
-        swap_label.halign = Gtk.Align.START;
-        swap_label.margin_start = 6;
+        var ram_label = create_name_label(_("RAM:"));
+        var swap_label = create_name_label(_("SWAP:"));
+        var freq_label = create_name_label(_("Frequency:"));
+        var uptime_label = create_name_label(_("Uptime:"));
+        var network_label = create_name_label(_("Network:"));
 
         attach (title_label, 1, 1, 2);
-        attach (separator, 1, 2, 2);
+        attach (separator_start, 1, 2, 2);
 
-        attach (memory_label, 1, 3, 1);
-        attach (memory_usage_label, 2, 3, 1);
+        attach (freq_label, 1, 3, 1);
+        attach (freq_value_label, 2, 3, 1);
 
-        attach (swap_label, 1, 4, 1);
-        attach (swap_usage_label, 2, 4, 1);
+        attach (ram_label, 1, 4, 1);
+        attach (ram_value_label, 2, 4, 1);
+
+        attach (swap_label, 1, 5, 1);
+        attach (swap_value_label, 2, 5, 1);
+
+        attach (network_label, 1, 6, 1);
+        attach (network_value_label, 2, 6, 1);
+
+        attach (uptime_label, 1, 7, 1);
+        attach (uptime_value_label, 2, 7, 1);
+
+        attach (separator_end, 1, 8, 2);
+
+        attach (quit_button, 1, 9, 2);
+
+        quit_button.clicked.connect (() => {
+            indicator.hide();
+        });
+
     }
 
-    public void update_memory_info (float used_memory, float total_memory) {
-        memory_usage_label.set_label("%.2f GB / %.2f GB".printf (used_memory, total_memory));
+    private Gtk.Label create_name_label (string label_name) {
+        var label = new Gtk.Label(label_name);
+        label.halign = Gtk.Align.START;
+        label.margin_start = 9;
+        return label;
+    }
+
+    private Gtk.Label create_value_label (string label_name = "") {
+        var label = new Gtk.Label(label_name);
+        label.halign = Gtk.Align.END;
+        label.margin_end = 9;
+        return label;
+    }
+
+    public void update_ram_info (float used_ram, float total_ram) {
+        ram_value_label.set_label("%.2f GB / %.2f GB".printf(used_ram, total_ram));
     }
 
     public void update_swap_info (float used_swap, float total_swap) {
-        swap_usage_label.set_label("%.2f GB / %.2f GB".printf (used_swap, total_swap));
+        swap_value_label.set_label("%.2f GB / %.2f GB".printf(used_swap, total_swap));
+    }
+
+    public void update_freq_info (float frequency) {
+        freq_value_label.set_label(frequency.to_string());
+    }
+
+    public void update_uptime_info (double uptime) {
+        uptime_value_label.set_label("%.2f %s".printf(uptime, _("hours")));
     }
 }
