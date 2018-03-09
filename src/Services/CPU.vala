@@ -3,13 +3,13 @@ public class SysMonitor.Services.CPU  : GLib.Object {
     private float last_used;
 
     private int _percentage_used;
-    private float _frequency;
+    private double _frequency;
 
     public int percentage_used {
         get { update_percentage_used (); return _percentage_used; }
     }
 
-    public float frequency {
+    public double frequency {
         get { update_frequency (); return _frequency; }
     }
 
@@ -18,7 +18,8 @@ public class SysMonitor.Services.CPU  : GLib.Object {
         last_total = 0;
     }
 
-    construct {}
+    construct {
+    }
 
     private void update_percentage_used () {
         GTop.Cpu cpu;
@@ -36,9 +37,26 @@ public class SysMonitor.Services.CPU  : GLib.Object {
     }
 
     private void update_frequency () {
-        GTop.Cpu cpu;
-        GTop.get_cpu (out cpu);
+        double maxcur = 0;
+        for (uint i = 0, isize = (int) get_num_processors (); i < isize; ++i) {
+            var cur = 1000.0 * read(i, "scaling_cur_freq");
+            if (i == 0) {
+                maxcur = cur;
+            } else {
+                maxcur = double.max(cur, maxcur);
+            }
+        }
+        _frequency = (double) maxcur;
+    }
 
-        _frequency = (float) cpu.frequency;
+
+    private static double read(uint cpu, string what) {
+        string value;
+        try {
+            FileUtils.get_contents(@"/sys/devices/system/cpu/cpu$cpu/cpufreq/$what", out value);
+        } catch (Error e) {
+            value = "0";
+        }
+        return double.parse(value);
     }
 }

@@ -29,9 +29,9 @@ public class SysMonitor.Services.System  : GLib.Object {
 
     private void update_network () {
         GTop.NetLoad network;
-        GTop.get_netload(out network);
+        //GTop.get_netload(out network);
 
-        _network_down = (float) network.bytes_in;
-        _network_up = (float) network.bytes_out;
+        //_network_down = (float) network.bytes_in;
+        //_network_up = (float) network.bytes_out;
     }
 }

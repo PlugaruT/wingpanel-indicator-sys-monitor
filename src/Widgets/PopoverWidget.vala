@@ -31,11 +31,11 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
 
         var quit_button = new Gtk.ModelButton ();
         quit_button.text = _("Quit");
-        quit_button.hexpand = true;
-        quit_button.get_style_context ().add_class ("menuitem");
+        quit_button.get_style_context().add_class("menuitem");
+        //quit_button.hexpand = true;
 
-        var ram_label = create_name_label(_("RAM:"));
-        var swap_label = create_name_label(_("SWAP:"));
+        var ram_label = create_name_label(_("Ram:"));
+        var swap_label = create_name_label(_("Swap:"));
         var freq_label = create_name_label(_("Frequency:"));
         var uptime_label = create_name_label(_("Uptime:"));
         var network_label = create_name_label(_("Network:"));
@@ -65,7 +65,6 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         quit_button.clicked.connect (() => {
             indicator.hide();
         });
-
     }
 
     private Gtk.Label create_name_label (string label_name) {
@@ -76,7 +75,7 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         return label;
     }
 
-    private Gtk.Label create_value_label (string label_name = "") {
+    private Gtk.Label create_value_label (string label_name="") {
         var label = new Gtk.Label(label_name);
         label.halign = Gtk.Align.END;
         label.get_style_context ().add_class ("menuitem");
@@ -84,16 +83,16 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         return label;
     }
 
-    public void update_ram_info (float used_ram, float total_ram) {
-        ram_value_label.set_label("%.2f GB / %.2f GB".printf(used_ram, total_ram));
+    public void update_ram_info (double used_ram, double total_ram) {
+        ram_value_label.set_label("%s / %s".printf(SysMonitor.Services.Utils.format_size(used_ram), SysMonitor.Services.Utils.format_size(total_ram)));
     }
 
-    public void update_swap_info (float used_swap, float total_swap) {
-        swap_value_label.set_label("%.2f GB / %.2f GB".printf(used_swap, total_swap));
+    public void update_swap_info (double used_swap, double total_swap) {
+        swap_value_label.set_label("%s / %s".printf(SysMonitor.Services.Utils.format_size(used_swap), SysMonitor.Services.Utils.format_size(total_swap)));
     }
 
-    public void update_freq_info (float frequency) {
-        freq_value_label.set_label(frequency.to_string());
+    public void update_freq_info (double frequency) {
+        freq_value_label.set_label(SysMonitor.Services.Utils.format_frequency(frequency));
     }
 
     public void update_uptime_info (string uptime) {
@@ -101,6 +100,6 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
     }
 
     public void update_network_info (float up, float down){
-        network_value_label.set_label("UP: %.1f DOWN: %.1f".printf(up, down));
+        network_value_label.set_label("Up: %.1f Down: %.1f".printf(up, down));
     }
 }
