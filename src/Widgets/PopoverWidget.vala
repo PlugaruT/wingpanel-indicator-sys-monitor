@@ -52,15 +52,15 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
         attach (swap_label, 1, 5, 1);
         attach (swap_value_label, 2, 5, 1);
 
-        attach (network_label, 1, 6, 1);
-        attach (network_value_label, 2, 6, 1);
+        //attach (network_label, 1, 6, 1);
+        //attach (network_value_label, 2, 6, 1);
 
-        attach (uptime_label, 1, 7, 1);
-        attach (uptime_value_label, 2, 7, 1);
+        attach (uptime_label, 1, 6, 1);
+        attach (uptime_value_label, 2, 6, 1);
 
-        attach (separator_end, 1, 8, 2);
+        attach (separator_end, 1, 7, 2);
 
-        attach (quit_button, 1, 9, 2);
+        attach (quit_button, 1, 8, 2);
 
         quit_button.clicked.connect (() => {
             indicator.hide();
