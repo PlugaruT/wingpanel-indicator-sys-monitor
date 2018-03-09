@@ -18,4 +18,4 @@ Architecture: any
 Depends: ${misc:Pre-Depends},${misc:Depends}, ${shlibs:Depends}
 Enhances: wingpanel
 Description: Wingpanel System Monitor Indicator
- System monitor indicator that display CPU and RAM usage in wingpanel
+ System monitor indicator for wingpanel

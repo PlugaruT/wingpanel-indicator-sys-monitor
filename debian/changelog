@@ -1,3 +1,10 @@
+wingpanel-indicator-sys-monitor (1.2.0) xenial; urgency=medium
+
+  * Add frequency, uptime, swap in popover
+  * Code cleanup and refactoring
+
+ -- Tudor Plugaru <plugaru.tudor@gmail.com>  Mon, 6 Mar 2018
+
 wingpanel-indicator-sys-monitor (1.1.0) xenial; urgency=medium
 
   * Display actual ram usage in a popover widget
