@@ -1,4 +1,4 @@
-Source: wingpanel-indicator-sys-monitor
+Source: com.github.plugarut.wingpanel-indicator-sys-monitor
 Maintainer: Tudor Plugaru <plugaru.tudor@gmail.com>
 Section: x11
 Priority: optional
@@ -13,7 +13,7 @@ Build-Depends: debhelper (>= 10),
 Standards-Version: 3.9.7
 Homepage: https://github.com/PlugaruT/wingpanel-indicator-sys-monitor
 
-Package: wingpanel-indicator-sys-monitor
+Package: com.github.plugarut.wingpanel-indicator-sys-monitor
 Architecture: any
 Depends: ${misc:Pre-Depends},${misc:Depends}, ${shlibs:Depends}
 Enhances: wingpanel
