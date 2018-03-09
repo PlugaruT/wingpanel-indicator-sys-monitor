@@ -1,7 +1,5 @@
 # Wingpanel System Monitor Indicator
 
-Currently the indicator show CPU and RAM usage.
-
 ![Screenshot](data/images/screenshot.png)
 
 ## Building and Installation
