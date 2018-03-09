@@ -6,9 +6,11 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         column_spacing = 4;
         margin_top = 4;
 
+        var icon = new Gtk.Image.from_icon_name ("computer-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label("CPU");
         mem_label = new Gtk.Label("MEM");
 
+        add (icon);
         add (cpu_label);
         add (mem_label);
     }
@@ -21,6 +23,22 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         mem_label.set_label(this.format_int(mem_usage));
     }
 
+    public void hide_cpu () {
+        remove (cpu_label);
+    }
+
+    public void show_cpu () {
+        add (cpu_label);
+    }
+
+    public void hide_mem () {
+        remove (mem_label);
+    }
+
+    public void show_mem () {
+        add (cpu_label);
+    }
+
     private string format_int (int number) {
         if (number < 10) {
             return "0%i%%".printf(number);
@@ -28,6 +46,5 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
             return "%i%%".printf(number);
         }
     }
-
 }
 

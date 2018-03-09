@@ -4,6 +4,8 @@ sources = files (
   'Services/System.vala',
   'Services/Utils.vala',
   'Widgets/PopoverWidget.vala',
+  'Widgets/MainView.vala',
+  'Widgets/SettingsView.vala',
   'Widgets/DisplayWidget.vala',
   'Indicator.vala',
 )
