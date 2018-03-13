@@ -14,9 +14,10 @@ subdir ('src')
 subdir ('po')
 
 shared_module(
- meson.project_name (),
+  meson.project_name (),
   sources,
   link_args : ['-lm', '-nostartfiles'],
+  name_prefix: '',
   dependencies : [
     dependency('glib-2.0'),
     dependency('gobject-2.0'),
