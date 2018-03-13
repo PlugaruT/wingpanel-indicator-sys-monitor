@@ -13,32 +13,34 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
                 display_name: _("Sys-Monitor"),
                 description: _("System monitor indicator that display CPU and RAM usage in wingpanel"));
 
-        this.cpu = new SysMonitor.Services.CPU();
-        this.memory = new SysMonitor.Services.Memory();
-        this.system = new SysMonitor.Services.System();
+        cpu = new SysMonitor.Services.CPU();
+        memory = new SysMonitor.Services.Memory();
+        system = new SysMonitor.Services.System();
 
         visible = true;
 
-        this.update ();
+        update ();
     }
 
     public override Gtk.Widget get_display_widget () {
-        if (this.display_widget == null) {
-            this.display_widget = new SysMonitor.Widgets.DisplayWidget();
-            this.update ();
+        if (display_widget == null) {
+            display_widget = new SysMonitor.Widgets.DisplayWidget();
+            update ();
         }
-        return this.display_widget;
+        return display_widget;
     }
 
     public override Gtk.Widget? get_widget () {
-        if (this.popover_widget == null) {
-            this.popover_widget = new SysMonitor.Widgets.PopoverWidget (this);
+        if (popover_widget == null) {
+            popover_widget = new SysMonitor.Widgets.PopoverWidget (this);
         }
 
-        return this.popover_widget;
+        return popover_widget;
     }
 
-    public override void opened () {}
+    public override void opened () {
+        popover_widget.set_main_view();
+    }
 
     public override void closed () {}
 
@@ -47,10 +49,10 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     }
 
     private void update () {
-        if (this.display_widget != null) {
+        if (display_widget != null) {
             Timeout.add_seconds (1, () => {
-                this.display_widget.set_cpu(this.cpu.percentage_used);
-                this.display_widget.set_mem(this.memory.percentage_used);
+                display_widget.set_cpu(cpu.percentage_used);
+                display_widget.set_ram(memory.percentage_used);
 
                 update_popover_widget_data ();
                 return true;
@@ -59,11 +61,10 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     }
 
     private void update_popover_widget_data () {
-        this.popover_widget.update_ram_info(this.memory.used, this.memory.total);
-        this.popover_widget.update_swap_info(this.memory.used_swap, this.memory.total_swap);
-        this.popover_widget.update_freq_info(this.cpu.frequency);
-        this.popover_widget.update_uptime_info(this.system.uptime);
-        this.popover_widget.update_network_info(this.system.network_up, this.system.network_down);
+        popover_widget.update_ram_info(memory.used, memory.total);
+        popover_widget.update_swap_info(memory.used_swap, memory.total_swap);
+        popover_widget.update_freq_info(cpu.frequency);
+        popover_widget.update_uptime_info(system.uptime);
     }
 }
 

@@ -15,6 +15,11 @@ libgtop = dependency('libgtop-2.0')
 subdir ('src')
 subdir ('po')
 
+install_data(
+    'schemas/com.github.plugarut.wingpanel-indicator-sys-monitor.gschema.xml',
+    install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
+)
+
 shared_module(meson.project_name (),
             sources,
             dependencies : [glib, gobject, gtk, granite, wingpanel, libgtop],
@@ -24,3 +29,5 @@ shared_module(meson.project_name (),
             ],
             install_dir : '/usr/lib/x86_64-linux-gnu/wingpanel/'
 )
+
+meson.add_install_script('meson/post_install.py')
