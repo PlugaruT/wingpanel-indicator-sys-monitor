@@ -1,6 +1,7 @@
 # Wingpanel System Monitor Indicator
 
-![Screenshot](data/images/screenshot.png)
+![Screenshot](data/screenshot_0.png)
+![Screenshot](data/screenshot_1.png)
 
 ## Building and Installation
 
