@@ -52,7 +52,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         if (display_widget != null) {
             Timeout.add_seconds (1, () => {
                 display_widget.set_cpu(cpu.percentage_used);
-                display_widget.set_mem(memory.percentage_used);
+                display_widget.set_ram(memory.percentage_used);
 
                 update_popover_widget_data ();
                 return true;

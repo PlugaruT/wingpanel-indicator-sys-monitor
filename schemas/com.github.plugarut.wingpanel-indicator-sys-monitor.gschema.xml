@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+	<schema path="/com/github/plugarut/wingpanel-indicator-sys-monitor/" id="com.github.plugarut.wingpanel-indicator-sys-monitor" gettext-domain="sys-monitor-indicator">
+		<key type="b" name="show-cpu">
+			<default>true</default>
+			<summary>Show CPU load in Wingpanel</summary>
+			<description></description>
+		</key>
+    <key type="b" name="show-ram">
+			<default>true</default>
+			<summary>Show RAM usage in Wingpanel</summary>
+			<description></description>
+		</key>
+    <key type="b" name="show-icon">
+			<default>false</default>
+			<summary>Show sys-monitor icon in Wingpanel</summary>
+			<description></description>
+		</key>
+	</schema>
+</schemalist>
