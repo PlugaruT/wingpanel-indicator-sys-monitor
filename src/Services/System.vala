@@ -16,15 +16,16 @@ public class SysMonitor.Services.System  : GLib.Object {
         get { update_network (); return _network_down; }
     }
 
-    public System() {}
+    public System () {
+    }
 
-    construct {}
+    construct { }
 
     private void update_uptime () {
         GTop.Uptime uptime;
-        GTop.get_uptime(out uptime);
+        GTop.get_uptime (out uptime);
 
-        _uptime = Granite.DateTime.seconds_to_time((int)uptime.uptime);
+        _uptime = Granite.DateTime.seconds_to_time ((int)uptime.uptime);
     }
 
     private void update_network () {

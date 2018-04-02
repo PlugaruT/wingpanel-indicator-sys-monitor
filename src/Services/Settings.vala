@@ -1,5 +1,5 @@
 public class SysMonitor.Services.SettingsManager : Granite.Services.Settings {
-    private static SettingsManager? instance = null;
+    private static SettingsManager ? instance = null;
 
     public bool show_cpu { set; get; }
     public bool show_ram { set; get; }

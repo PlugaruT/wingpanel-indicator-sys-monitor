@@ -26,37 +26,37 @@ public class SysMonitor.Services.CPU  : GLib.Object {
         GTop.get_cpu (out cpu);
 
         var used = cpu.user + cpu.nice + cpu.sys;                               // get cpu used
-        var difference_used = (float) used - last_used;                         // calculate the difference used
-        var difference_total = (float) cpu.total - last_total;                  // calculate the difference total
+        var difference_used = (float)used - last_used;                          // calculate the difference used
+        var difference_total = (float)cpu.total - last_total;                   // calculate the difference total
         var pre_percentage = difference_used.abs () / difference_total.abs ();  // calculate the pre percentage
 
-        _percentage_used = (int) Math.round(pre_percentage * 100);
+        _percentage_used = (int)Math.round (pre_percentage * 100);
 
-        last_used = (float) used;
-        last_total = (float) cpu.total;
+        last_used = (float)used;
+        last_total = (float)cpu.total;
     }
 
     private void update_frequency () {
         double maxcur = 0;
-        for (uint i = 0, isize = (int) get_num_processors (); i < isize; ++i) {
-            var cur = 1000.0 * read(i, "scaling_cur_freq");
+        for (uint i = 0, isize = (int)get_num_processors (); i < isize; ++i) {
+            var cur = 1000.0 * read (i, "scaling_cur_freq");
             if (i == 0) {
                 maxcur = cur;
             } else {
-                maxcur = double.max(cur, maxcur);
+                maxcur = double.max (cur, maxcur);
             }
         }
-        _frequency = (double) maxcur;
+        _frequency = (double)maxcur;
     }
 
 
-    private static double read(uint cpu, string what) {
+    private static double read (uint cpu, string what) {
         string value;
         try {
-            FileUtils.get_contents(@"/sys/devices/system/cpu/cpu$cpu/cpufreq/$what", out value);
+            FileUtils.get_contents (@ "/sys/devices/system/cpu/cpu$cpu/cpufreq/$what", out value);
         } catch (Error e) {
             value = "0";
         }
-        return double.parse(value);
+        return double.parse (value);
     }
 }

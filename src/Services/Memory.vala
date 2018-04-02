@@ -31,30 +31,30 @@ public class SysMonitor.Services.Memory  : GLib.Object {
     }
 
     private void update_percentage_used () {
-        _percentage_used = (int) Math.round((used / total) * 100);
+        _percentage_used = (int)Math.round ((used / total) * 100);
     }
 
     private void update_total () {
         GTop.Memory memory;
-        GTop.get_mem(out memory);
-        _total = (double) memory.total;
+        GTop.get_mem (out memory);
+        _total = (double)memory.total;
     }
 
     private void update_used () {
         GTop.Memory memory;
         GTop.get_mem (out memory);
-        _used = (double) memory.user;
+        _used = (double)memory.user;
     }
 
     private void update_used_swap () {
         GTop.Swap swap;
-        GTop.get_swap(out swap);
-        _used_swap = (double) swap.used;
+        GTop.get_swap (out swap);
+        _used_swap = (double)swap.used;
     }
 
     private void update_total_swap () {
         GTop.Swap swap;
-        GTop.get_swap(out swap);
-        _total_swap = (double) swap.total;
+        GTop.get_swap (out swap);
+        _total_swap = (double)swap.total;
     }
 }

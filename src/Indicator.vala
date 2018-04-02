@@ -9,28 +9,30 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
 
 
     public Indicator (Wingpanel.IndicatorManager.ServerType server_type) {
-        Object (code_name: APPNAME,
-                display_name: _("Sys-Monitor"),
-                description: _("System monitor indicator that display CPU and RAM usage in wingpanel"));
+        Object (
+            code_name: APPNAME,
+            display_name: _ ("Sys-Monitor"),
+            description: _ ("System monitor indicator that display CPU and RAM usage in wingpanel")
+            );
 
-        cpu = new SysMonitor.Services.CPU();
-        memory = new SysMonitor.Services.Memory();
-        system = new SysMonitor.Services.System();
+        cpu = new SysMonitor.Services.CPU ();
+        memory = new SysMonitor.Services.Memory ();
+        system = new SysMonitor.Services.System ();
 
         visible = true;
 
-        update ();
+            update ();
     }
 
     public override Gtk.Widget get_display_widget () {
         if (display_widget == null) {
-            display_widget = new SysMonitor.Widgets.DisplayWidget();
+            display_widget = new SysMonitor.Widgets.DisplayWidget ();
             update ();
         }
         return display_widget;
     }
 
-    public override Gtk.Widget? get_widget () {
+    public override Gtk.Widget ? get_widget () {
         if (popover_widget == null) {
             popover_widget = new SysMonitor.Widgets.PopoverWidget (this);
         }
@@ -39,10 +41,11 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-        popover_widget.set_main_view();
+        popover_widget.set_main_view ();
     }
 
-    public override void closed () {}
+    public override void closed () {
+    }
 
     public void hide () {
         visible = false;
@@ -51,25 +54,25 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     private void update () {
         if (display_widget != null) {
             Timeout.add_seconds (1, () => {
-                display_widget.set_cpu(cpu.percentage_used);
-                display_widget.set_ram(memory.percentage_used);
+                                     display_widget.set_cpu (cpu.percentage_used);
+                                     display_widget.set_ram (memory.percentage_used);
 
-                update_popover_widget_data ();
-                return true;
-            });
+                                     update_popover_widget_data ();
+                                     return true;
+                                 });
         }
     }
 
     private void update_popover_widget_data () {
-        popover_widget.update_ram_info(memory.used, memory.total);
-        popover_widget.update_swap_info(memory.used_swap, memory.total_swap);
-        popover_widget.update_freq_info(cpu.frequency);
-        popover_widget.update_uptime_info(system.uptime);
+        popover_widget.update_ram_info (memory.used, memory.total);
+        popover_widget.update_swap_info (memory.used_swap, memory.total_swap);
+        popover_widget.update_freq_info (cpu.frequency);
+        popover_widget.update_uptime_info (system.uptime);
     }
 }
 
-public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-    debug ("Loading system monitor indicator");
+public Wingpanel.Indicator ? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
+        debug ("Loading system monitor indicator");
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         debug ("Wingpanel is not in session, not loading sys-monitor");
