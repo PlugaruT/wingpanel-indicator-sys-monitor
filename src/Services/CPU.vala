@@ -53,7 +53,7 @@ public class SysMonitor.Services.CPU  : GLib.Object {
     private static double read (uint cpu, string what) {
         string value;
         try {
-            FileUtils.get_contents (@ "/sys/devices/system/cpu/cpu$cpu/cpufreq/$what", out value);
+            FileUtils.get_contents (@"/sys/devices/system/cpu/cpu$cpu/cpufreq/$what", out value);
         } catch (Error e) {
             value = "0";
         }
