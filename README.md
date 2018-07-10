@@ -9,6 +9,7 @@ You'll need the following dependencies:
 
 ```
 libglib2.0-dev
+libgtop2-dev
 libgranite-dev
 libgtk-3-dev
 libwingpanel-2.0-dev
