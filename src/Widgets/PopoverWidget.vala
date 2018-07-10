@@ -21,7 +21,9 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
 
         var stack_switcher = new Gtk.StackSwitcher ();
         stack_switcher.margin = 3;
-        stack_switcher.halign = Gtk.Align.CENTER;
+        stack_switcher.halign = Gtk.Align.FILL;
+        stack_switcher.margin_start = 15;
+        stack_switcher.margin_end = 15;
         stack_switcher.homogeneous = true;
         stack_switcher.stack = stack;
 
