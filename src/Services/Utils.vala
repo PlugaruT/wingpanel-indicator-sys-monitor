@@ -59,6 +59,10 @@ public class SysMonitor.Services.Utils  : GLib.Object {
             order++;
             len = len/1024;
         }
+        if(bytes < 0){
+            len = 0;
+            order = 0;
+        }
         if(round == true){
             speed = "%3.0f %s".printf(len, sizes[order]);
         }else{

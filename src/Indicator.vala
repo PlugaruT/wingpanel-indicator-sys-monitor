@@ -58,7 +58,8 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
             Timeout.add_seconds (1, () => {
                                      display_widget.set_cpu (cpu.percentage_used);
                                      display_widget.set_ram (memory.percentage_used);
-                                     display_widget.set_network (net.bytes_out, net.bytes_in);
+                                     var bytes = net.get_bytes();
+                                     display_widget.set_network (bytes[0], bytes[1]);
                                      update_popover_widget_data ();
                                      return true;
                                  });
@@ -70,7 +71,8 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         popover_widget.update_swap_info (memory.used_swap, memory.total_swap);
         popover_widget.update_freq_info (cpu.frequency);
         popover_widget.update_uptime_info (system.uptime);
-        popover_widget.update_net_speed (net.bytes_in, net.bytes_out);
+        var bytes = net.get_bytes();
+        popover_widget.update_net_speed (bytes[0], bytes[1]);
     }
 }
 

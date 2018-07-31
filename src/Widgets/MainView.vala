@@ -67,8 +67,8 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         uptime_value_label.set_label (uptime);
     }
 
-    public void update_net_speed (int bytes_in, int bytes_out) {
-        network_value_label.set_label ("D: " + SysMonitor.Services.Utils.format_net_speed (bytes_in, false) + " | U: " + SysMonitor.Services.Utils.format_net_speed(bytes_out, false));
+    public void update_net_speed (int bytes_out, int bytes_in) {
+        network_value_label.set_label ("D: " + SysMonitor.Services.Utils.format_net_speed (bytes_out, false) + " | U: " + SysMonitor.Services.Utils.format_net_speed(bytes_in, false));
     }
 }
 
