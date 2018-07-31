@@ -22,7 +22,9 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         cpu_label = new Gtk.Label ("CPU");
         ram_label = new Gtk.Label ("MEM");
         network_down_label = new Gtk.Label ("DOWN");
+        network_down_label.set_width_chars (8);
         network_up_label = new Gtk.Label ("UP");
+        network_up_label.set_width_chars (8);
         icon_down = new Gtk.Image.from_icon_name ("go-down-symbolic", Gtk.IconSize.MENU);
         icon_up = new Gtk.Image.from_icon_name ("go-up-symbolic", Gtk.IconSize.MENU);
 
@@ -73,8 +75,8 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     public void set_network (int bytes_out, int bytes_in) {
-        network_down_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_out, true));
-        network_up_label.set_label (SysMonitor.Services.Utils.format_net_speed(bytes_in, true));
+        network_up_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_out, true));
+        network_down_label.set_label (SysMonitor.Services.Utils.format_net_speed(bytes_in, true));
     }
 
     private void update_cpu_revelear () {
