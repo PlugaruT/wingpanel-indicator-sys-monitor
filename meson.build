@@ -13,6 +13,7 @@ shared_module(
     meson.project_name(),
     'src/Indicator.vala',
     'src/Services/CPU.vala',
+    'src/Services/Net.vala',
     'src/Services/Memory.vala',
     'src/Services/System.vala',
     'src/Services/Utils.vala',

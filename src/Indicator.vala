@@ -3,6 +3,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     private SysMonitor.Services.CPU cpu;
     private SysMonitor.Services.Memory memory;
     private SysMonitor.Services.System system;
+    private SysMonitor.Services.Net net;
 
     private SysMonitor.Widgets.DisplayWidget display_widget;
     private SysMonitor.Widgets.PopoverWidget popover_widget;
@@ -18,6 +19,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         cpu = new SysMonitor.Services.CPU ();
         memory = new SysMonitor.Services.Memory ();
         system = new SysMonitor.Services.System ();
+        net = new SysMonitor.Services.Net ();
 
         visible = true;
 
@@ -56,7 +58,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
             Timeout.add_seconds (1, () => {
                                      display_widget.set_cpu (cpu.percentage_used);
                                      display_widget.set_ram (memory.percentage_used);
-
+                                     display_widget.set_network (net.bytes_out, net.bytes_in);
                                      update_popover_widget_data ();
                                      return true;
                                  });
@@ -68,6 +70,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         popover_widget.update_swap_info (memory.used_swap, memory.total_swap);
         popover_widget.update_freq_info (cpu.frequency);
         popover_widget.update_uptime_info (system.uptime);
+        popover_widget.update_net_speed (net.bytes_in, net.bytes_out);
     }
 }
 
