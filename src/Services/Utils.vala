@@ -49,4 +49,26 @@ public class SysMonitor.Services.Utils  : GLib.Object {
                                                 val < 999.5  ? "%.0f" : "%.0f");
         return pattern.printf (val);
     }
+
+    public static string format_net_speed (int bytes, bool round) {
+        string[] sizes = { " B/s", "KB/s", "MB/s", "GB/s", "TB/s" };
+        double len = (double) bytes;
+        int order = 0;
+        string speed = "";
+        while (len >= 1024 && order < sizes.length - 1) {
+            order++;
+            len = len/1024;
+        }
+        if(bytes < 0){
+            len = 0;
+            order = 0;
+        }
+        if(round == true){
+            speed = "%3.0f %s".printf(len, sizes[order]);
+        }else{
+            speed = "%3.2f %s".printf(len, sizes[order]);
+        }
+
+        return speed;
+    }
 }

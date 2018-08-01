@@ -18,6 +18,8 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         freq_value_label = create_value_label ();
         uptime_value_label = create_value_label ();
         network_value_label = create_value_label ();
+        network_value_label.set_width_chars (24);
+        network_value_label.set_justify (Gtk.Justification.FILL);
 
         var ram_label = create_name_label (_ ("Ram:"));
         var swap_label = create_name_label (_ ("Swap:"));
@@ -33,6 +35,8 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         attach (swap_value_label,   2, 2, 1, 1);
         attach (uptime_label,       1, 3, 1, 1);
         attach (uptime_value_label, 2, 3, 1, 1);
+        attach (network_label,       1, 4, 1, 1);
+        attach (network_value_label, 2, 4, 1, 1);
     }
 
     private Gtk.Label create_name_label (string label_name) {
@@ -65,6 +69,10 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
 
     public void update_uptime (string uptime) {
         uptime_value_label.set_label (uptime);
+    }
+
+    public void update_net_speed (int bytes_out, int bytes_in) {
+        network_value_label.set_label ("D: " + SysMonitor.Services.Utils.format_net_speed (bytes_in, false) + " | U: " + SysMonitor.Services.Utils.format_net_speed(bytes_out, false));
     }
 }
 

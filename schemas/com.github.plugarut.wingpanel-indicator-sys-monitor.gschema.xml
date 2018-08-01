@@ -11,6 +11,11 @@
 			<summary>Show RAM usage in Wingpanel</summary>
 			<description></description>
 		</key>
+	<key type="b" name="show-network">
+			<default>true</default>
+			<summary>Show Network usage in Wingpanel</summary>
+			<description></description>
+		</key>
     <key type="b" name="show-icon">
 			<default>false</default>
 			<summary>Show sys-monitor icon in Wingpanel</summary>
