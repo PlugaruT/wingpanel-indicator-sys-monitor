@@ -35,7 +35,7 @@ public class SysMonitor.Services.Net  : GLib.Object {
         var n_bytes_in = 0;
         for (uint j = 0; j < netlist.number; ++j) {
             var device = devices[j];
-            if(device != "lo"){
+            if(device != "lo" && device.substring (0, 3) != "tun"){
                 GTop.get_netload (out netload, device);
 
                 n_bytes_out += (int) netload.bytes_out;
