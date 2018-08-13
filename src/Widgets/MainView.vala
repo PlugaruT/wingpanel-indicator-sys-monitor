@@ -17,8 +17,9 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         swap_value_label = create_value_label ();
         freq_value_label = create_value_label ();
         uptime_value_label = create_value_label ();
+        
         network_value_label = create_value_label ();
-        network_value_label.set_width_chars (24);
+        network_value_label.set_width_chars (10);
         network_value_label.set_justify (Gtk.Justification.FILL);
 
         var ram_label = create_name_label (_ ("Ram:"));
@@ -62,7 +63,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
     public void update_swap (double used_swap, double total_swap) {
         swap_value_label.set_label ("%s / %s".printf (SysMonitor.Services.Utils.format_size (used_swap), SysMonitor.Services.Utils.format_size (total_swap)));
     }
-
+	
     public void update_freq (double frequency) {
         freq_value_label.set_label (SysMonitor.Services.Utils.format_frequency (frequency));
     }
@@ -72,7 +73,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
     }
 
     public void update_net_speed (int bytes_out, int bytes_in) {
-        network_value_label.set_label ("D: " + SysMonitor.Services.Utils.format_net_speed (bytes_in, false) + " | U: " + SysMonitor.Services.Utils.format_net_speed(bytes_out, false));
+        network_value_label.set_label ("D: " + SysMonitor.Services.Utils.format_net_speed (bytes_in, false) + " \nU: " + SysMonitor.Services.Utils.format_net_speed(bytes_out, false));
     }
 }
 

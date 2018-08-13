@@ -40,6 +40,7 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
 
         network_revealer = new Gtk.Revealer ();
         network_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+        
         var grid_network = new Gtk.Grid ();
         update_network_revealer ();
         grid_network.attach (icon_down, 0, 0, 1, 1);
@@ -60,8 +61,9 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
                                       update_ram_revealer ();
                                       update_network_revealer ();
                                   });
-        add (network_revealer);
+                                  
         add (icon_revealer);
+        add (network_revealer);
         add (cpu_revealer);
         add (ram_revealer);
     }
