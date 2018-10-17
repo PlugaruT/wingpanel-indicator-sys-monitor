@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.plugarut.wingpanel-indicator-sys-monitor-"
 "indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 16:42-0300\n"
+"POT-Creation-Date: 2018-10-17 22:22+0300\n"
 "PO-Revision-Date: 2018-09-02 23:42+ZONE\n"
 "Last-Translator: Helder Bertoldo <helder.bertoldo@gmail.com>\n"
 "Language-Team: Português do Brasil <LL@li.org>\n"
@@ -24,7 +24,9 @@ msgstr ""
 
 #: src/Indicator.vala:16
 msgid "System monitor indicator that display CPU and RAM usage in wingpanel"
-msgstr "Indicador de Monitor do Sistema que exibe o uso da CPU e Memória RAM no wingpanel"
+msgstr ""
+"Indicador de Monitor do Sistema que exibe o uso da CPU e Memória RAM no "
+"wingpanel"
 
 #: src/Widgets/PopoverWidget.vala:19
 msgid "Main"
