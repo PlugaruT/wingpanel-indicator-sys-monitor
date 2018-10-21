@@ -39,7 +39,7 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         margin_top = 4;
 
         settings = SysMonitor.Services.SettingsManager.get_default ();
-        icon = new Gtk.Image.from_icon_name ("computer-symbolic", Gtk.IconSize.MENU);
+        icon = new Gtk.Image.from_icon_name ("utilities-system-monitor-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label ("CPU");
         ram_label = new Gtk.Label ("MEM");
         network_down_label = new Gtk.Label ("DOWN");
