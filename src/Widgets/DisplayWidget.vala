@@ -21,10 +21,15 @@
 
 public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     private SysMonitor.Services.SettingsManager settings;
+    
     private Gtk.Label cpu_label;
     private Gtk.Label cpu_desr;
+    private Gtk.Label cpu_graph;
+    
     private Gtk.Label ram_label;
     private Gtk.Label ram_desr;
+    private Gtk.Label ram_graph;
+    
     private Gtk.Label network_down_label;
     private Gtk.Label network_up_label;
     private Gtk.Image icon;
@@ -32,8 +37,15 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     private Gtk.Image icon_up;
 
     private Gtk.Revealer cpu_revealer;
+    private Gtk.Revealer cpu_desr_revealer;
+    private Gtk.Revealer cpu_graph_revealer;
+    
     private Gtk.Revealer ram_revealer;
+    private Gtk.Revealer ram_desr_revealer;
+    private Gtk.Revealer ram_graph_revealer;
+    
     private Gtk.Revealer network_revealer;
+    
     private Gtk.Revealer icon_revealer;
 
     construct {
@@ -43,9 +55,13 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         settings = SysMonitor.Services.SettingsManager.get_default ();
         icon = new Gtk.Image.from_icon_name ("computer-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label ("CPU");
+        cpu_graph = new Gtk.Label ("CPU");
         cpu_desr = new Gtk.Label ("CPU");
+        
         ram_label = new Gtk.Label ("MEM");
+        ram_graph = new Gtk.Label ("MEM");
         ram_desr = new Gtk.Label ("MEM");
+        
         network_down_label = new Gtk.Label ("DOWN");
         network_down_label.set_width_chars (8);
         network_up_label = new Gtk.Label ("UP");
@@ -54,22 +70,40 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         icon_up = new Gtk.Image.from_icon_name ("go-up-symbolic", Gtk.IconSize.MENU);
 
         cpu_revealer = new Gtk.Revealer ();
+        cpu_desr_revealer = new Gtk.Revealer ();
+        cpu_graph_revealer = new Gtk.Revealer ();
         {
             cpu_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
             update_cpu_revelear ();
+            update_cpu_desr_revelear ();
+            update_cpu_graph_revelear ();
+            
+            cpu_desr_revealer.add (cpu_desr);
+            cpu_graph_revealer.add (cpu_graph);
+            
             var grid_gpu = new Gtk.Grid ();
-            grid_gpu.attach (cpu_desr, 0, 0, 1, 1);
-            grid_gpu.attach_next_to (cpu_label, cpu_desr, Gtk.PositionType.RIGHT, 1, 1);
+            grid_gpu.attach (cpu_desr_revealer, 0, 0, 1, 1);
+            grid_gpu.attach_next_to (cpu_graph_revealer, cpu_desr_revealer, Gtk.PositionType.RIGHT, 1, 1);
+            grid_gpu.attach_next_to (cpu_label, cpu_graph_revealer, Gtk.PositionType.RIGHT, 1, 1);
             cpu_revealer.add (grid_gpu);
         }
 
         ram_revealer = new Gtk.Revealer ();
+        ram_desr_revealer = new Gtk.Revealer ();
+        ram_graph_revealer = new Gtk.Revealer ();
         {
             ram_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
             update_ram_revealer ();
+            update_ram_desr_revelear ();
+            update_ram_graph_revelear ();
+            
+            ram_desr_revealer.add (ram_desr);
+            ram_graph_revealer.add (ram_graph);
+            
             var grid_ram = new Gtk.Grid ();
-            grid_ram.attach (ram_desr, 0, 0, 1, 1);
-            grid_ram.attach_next_to (ram_label, ram_desr, Gtk.PositionType.RIGHT, 1, 1);
+            grid_ram.attach (ram_desr_revealer, 0, 0, 1, 1);
+            grid_ram.attach_next_to (ram_graph_revealer, ram_desr_revealer, Gtk.PositionType.RIGHT, 1, 1);
+            grid_ram.attach_next_to (ram_label, ram_graph_revealer, Gtk.PositionType.RIGHT, 1, 1);
             ram_revealer.add (grid_ram);
         }
 
@@ -106,10 +140,12 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
 
     public void set_cpu (int cpu_usage) {
         cpu_label.set_label (this.format_int (cpu_usage));
+        cpu_graph.set_label (this.get_percent_progress_string (cpu_usage));
     }
 
     public void set_ram (int ram_usage) {
         ram_label.set_label (this.format_int (ram_usage));
+        ram_graph.set_label (this.get_percent_progress_string (ram_usage));
     }
 
     public void set_network (int bytes_out, int bytes_in) {
@@ -120,9 +156,25 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     private void update_cpu_revelear () {
         cpu_revealer.reveal_child = settings.show_cpu;
     }
+    
+    private void update_cpu_desr_revelear () {
+        cpu_desr_revealer.reveal_child = settings.show_cpu;
+    }
+
+    private void update_cpu_graph_revelear () {
+        cpu_graph_revealer.reveal_child = settings.show_cpu;
+    }
 
     private void update_ram_revealer () {
         ram_revealer.reveal_child = settings.show_ram;
+    }
+
+    private void update_ram_desr_revelear () {
+        ram_desr_revealer.reveal_child = settings.show_ram;
+    }
+
+    private void update_ram_graph_revelear () {
+        ram_graph_revealer.reveal_child = settings.show_ram;
     }
 
     private void update_network_revealer () {
@@ -138,6 +190,36 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
             return "0%i%%".printf (number);
         } else {
             return "%i%%".printf (number);
+        }
+    }
+    
+    private string get_percent_progress_string(int number) {
+        if (number < 25) {
+            if (number < 12.5) {
+                return "░░░░";
+            } else {
+                return "▒░░░";
+            }
+        } else if (number < 50) {
+            if (number < 37.5) {
+                return "█░░░";
+            } else {
+                return "█▒░░";
+            }
+        } else if (number < 75) {
+            if (number < 62.5) {
+                return "██░░";
+            } else {
+                return "██▒░";
+            }
+        } else if (number < 100) {
+            if (number < 87.5) {
+                return "███░";
+            } else {
+                return "███▒";
+            }
+        } else {
+            return "████";
         }
     }
 }
