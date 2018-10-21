@@ -22,7 +22,9 @@
 public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     private SysMonitor.Services.SettingsManager settings;
     private Gtk.Label cpu_label;
+    private Gtk.Label cpu_desr;
     private Gtk.Label ram_label;
+    private Gtk.Label ram_desr;
     private Gtk.Label network_down_label;
     private Gtk.Label network_up_label;
     private Gtk.Image icon;
@@ -41,7 +43,9 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         settings = SysMonitor.Services.SettingsManager.get_default ();
         icon = new Gtk.Image.from_icon_name ("computer-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label ("CPU");
+        cpu_desr = new Gtk.Label ("CPU");
         ram_label = new Gtk.Label ("MEM");
+        ram_desr = new Gtk.Label ("MEM");
         network_down_label = new Gtk.Label ("DOWN");
         network_down_label.set_width_chars (8);
         network_up_label = new Gtk.Label ("UP");
@@ -50,31 +54,42 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         icon_up = new Gtk.Image.from_icon_name ("go-up-symbolic", Gtk.IconSize.MENU);
 
         cpu_revealer = new Gtk.Revealer ();
-        cpu_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
-        update_cpu_revelear ();
-        cpu_revealer.add (cpu_label);
+        {
+            cpu_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            update_cpu_revelear ();
+            var grid_gpu = new Gtk.Grid ();
+            grid_gpu.attach (cpu_desr, 0, 0, 1, 1);
+            grid_gpu.attach_next_to (cpu_label, cpu_desr, Gtk.PositionType.RIGHT, 1, 1);
+            cpu_revealer.add (grid_gpu);
+        }
 
         ram_revealer = new Gtk.Revealer ();
-        ram_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
-        update_ram_revealer ();
-        ram_revealer.add (ram_label);
+        {
+            ram_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            update_ram_revealer ();
+            var grid_ram = new Gtk.Grid ();
+            grid_ram.attach (ram_desr, 0, 0, 1, 1);
+            grid_ram.attach_next_to (ram_label, ram_desr, Gtk.PositionType.RIGHT, 1, 1);
+            ram_revealer.add (grid_ram);
+        }
 
         network_revealer = new Gtk.Revealer ();
-        network_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+        {
+            network_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            update_network_revealer ();
+            var grid_network = new Gtk.Grid ();
+            grid_network.attach (icon_down, 0, 0, 1, 1);
+            grid_network.attach_next_to (network_down_label, icon_down, Gtk.PositionType.RIGHT, 1, 1);
+            grid_network.attach_next_to (icon_up, network_down_label, Gtk.PositionType.RIGHT, 1, 1);
+            grid_network.attach_next_to (network_up_label, icon_up, Gtk.PositionType.RIGHT, 1, 1);
+            network_revealer.add (grid_network);
+        }
         
-        var grid_network = new Gtk.Grid ();
-        update_network_revealer ();
-        grid_network.attach (icon_down, 0, 0, 1, 1);
-        grid_network.attach_next_to (network_down_label, icon_down, Gtk.PositionType.RIGHT, 1, 1);
-        grid_network.attach_next_to (icon_up, network_down_label, Gtk.PositionType.RIGHT, 1, 1);
-        grid_network.attach_next_to (network_up_label, icon_up, Gtk.PositionType.RIGHT, 1, 1);
-        network_revealer.add (grid_network);
 
         icon_revealer = new Gtk.Revealer ();
         icon_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
                                       update_icon_revealer ();
         icon_revealer.add (icon);
-
 
         settings.changed.connect (() => {
                                       update_icon_revealer ();
