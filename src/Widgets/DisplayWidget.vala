@@ -90,11 +90,11 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     public void set_cpu (int cpu_usage) {
-        cpu_label.set_label (this.format_int (cpu_usage));
+        cpu_label.set_label (this.format_percent (cpu_usage));
     }
 
     public void set_ram (int ram_usage) {
-        ram_label.set_label (this.format_int (ram_usage));
+        ram_label.set_label (this.format_percent (ram_usage));
     }
 
     public void set_network (int bytes_out, int bytes_in) {
@@ -118,12 +118,8 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         icon_revealer.reveal_child = settings.show_icon;
     }
 
-    private string format_int (int number) {
-        if (number < 10) {
-            return "0%i%%".printf (number);
-        } else {
-            return "%i%%".printf (number);
-        }
+    private string format_percent (int number) {
+        return "%i%%".printf (number);
     }
 }
 
