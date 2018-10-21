@@ -17,6 +17,11 @@ meson
 valac
 ```
 
+## Elementary
+
+```
+sudo apt install libgtop2-dev libgranite-dev libgtk-3-dev libwingpanel-2.0-dev meson valac
+```
 
 Run `meson` to configure the build environment and then `ninja` to build
 
