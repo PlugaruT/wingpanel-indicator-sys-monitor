@@ -17,12 +17,12 @@
 			<description></description>
 		</key>
     <key type="b" name="show-desr">
-			<default>true</default>
+			<default>false</default>
 			<summary>Show label for CPU/RAM in Wingpanel</summary>
 			<description></description>
 		</key>
     <key type="b" name="show-graph">
-			<default>true</default>
+			<default>false</default>
 			<summary>Show graph for CPU/RAM in Wingpanel</summary>
 			<description></description>
 		</key>
