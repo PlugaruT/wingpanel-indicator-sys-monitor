@@ -57,11 +57,9 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         cpu_label = new Gtk.Label ("CPU");
         cpu_graph = new Gtk.Label ("CPU");
         cpu_desr = new Gtk.Label ("CPU");
-        
         ram_label = new Gtk.Label ("MEM");
         ram_graph = new Gtk.Label ("MEM");
         ram_desr = new Gtk.Label ("MEM");
-        
         network_down_label = new Gtk.Label ("DOWN");
         network_down_label.set_width_chars (8);
         network_up_label = new Gtk.Label ("UP");
@@ -74,18 +72,16 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         cpu_graph_revealer = new Gtk.Revealer ();
         {
             cpu_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            cpu_desr_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            cpu_graph_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+    
             update_cpu_revelear ();
             update_cpu_desr_revelear ();
             update_cpu_graph_revelear ();
-            
+
             cpu_desr_revealer.add (cpu_desr);
             cpu_graph_revealer.add (cpu_graph);
-            
-            var grid_gpu = new Gtk.Grid ();
-            grid_gpu.attach (cpu_desr_revealer, 0, 0, 1, 1);
-            grid_gpu.attach_next_to (cpu_graph_revealer, cpu_desr_revealer, Gtk.PositionType.RIGHT, 1, 1);
-            grid_gpu.attach_next_to (cpu_label, cpu_graph_revealer, Gtk.PositionType.RIGHT, 1, 1);
-            cpu_revealer.add (grid_gpu);
+            cpu_revealer.add (cpu_label);
         }
 
         ram_revealer = new Gtk.Revealer ();
@@ -93,18 +89,16 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         ram_graph_revealer = new Gtk.Revealer ();
         {
             ram_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            ram_desr_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            ram_graph_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+
             update_ram_revealer ();
             update_ram_desr_revelear ();
             update_ram_graph_revelear ();
-            
+
             ram_desr_revealer.add (ram_desr);
             ram_graph_revealer.add (ram_graph);
-            
-            var grid_ram = new Gtk.Grid ();
-            grid_ram.attach (ram_desr_revealer, 0, 0, 1, 1);
-            grid_ram.attach_next_to (ram_graph_revealer, ram_desr_revealer, Gtk.PositionType.RIGHT, 1, 1);
-            grid_ram.attach_next_to (ram_label, ram_graph_revealer, Gtk.PositionType.RIGHT, 1, 1);
-            ram_revealer.add (grid_ram);
+            ram_revealer.add (ram_label);
         }
 
         network_revealer = new Gtk.Revealer ();
@@ -118,7 +112,6 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
             grid_network.attach_next_to (network_up_label, icon_up, Gtk.PositionType.RIGHT, 1, 1);
             network_revealer.add (grid_network);
         }
-        
 
         icon_revealer = new Gtk.Revealer ();
         icon_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
@@ -128,13 +121,20 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         settings.changed.connect (() => {
                                       update_icon_revealer ();
                                       update_cpu_revelear ();
+                                      update_cpu_desr_revelear ();
+                                      update_cpu_graph_revelear ();
                                       update_ram_revealer ();
+                                      update_ram_desr_revelear ();
+                                      update_ram_graph_revelear ();
                                       update_network_revealer ();
                                   });
-                                  
         add (icon_revealer);
         add (network_revealer);
+        add (cpu_desr_revealer);
+        add (cpu_graph_revealer);
         add (cpu_revealer);
+        add (ram_desr_revealer);
+        add (ram_graph_revealer);
         add (ram_revealer);
     }
 
@@ -158,11 +158,11 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
     
     private void update_cpu_desr_revelear () {
-        cpu_desr_revealer.reveal_child = settings.show_cpu;
+        cpu_desr_revealer.reveal_child = settings.show_cpu && settings.show_desr;
     }
 
     private void update_cpu_graph_revelear () {
-        cpu_graph_revealer.reveal_child = settings.show_cpu;
+        cpu_graph_revealer.reveal_child = settings.show_cpu && settings.show_graph;
     }
 
     private void update_ram_revealer () {
@@ -170,11 +170,11 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     private void update_ram_desr_revelear () {
-        ram_desr_revealer.reveal_child = settings.show_ram;
+        ram_desr_revealer.reveal_child = settings.show_ram && settings.show_desr;
     }
 
     private void update_ram_graph_revelear () {
-        ram_graph_revealer.reveal_child = settings.show_ram;
+        ram_graph_revealer.reveal_child = settings.show_ram && settings.show_graph;
     }
 
     private void update_network_revealer () {
