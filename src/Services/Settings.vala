@@ -25,6 +25,8 @@ public class SysMonitor.Services.SettingsManager : Granite.Services.Settings {
     public bool show_cpu { set; get; }
     public bool show_ram { set; get; }
     public bool show_network { set; get; }
+    public bool show_desr { set; get; }
+    public bool show_graph { set; get; }
     public bool show_icon { set; get; }
 
     public SettingsManager () {

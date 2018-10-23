@@ -16,6 +16,16 @@
 			<summary>Show Network usage in Wingpanel</summary>
 			<description></description>
 		</key>
+    <key type="b" name="show-desr">
+			<default>false</default>
+			<summary>Show label for CPU/RAM in Wingpanel</summary>
+			<description></description>
+		</key>
+    <key type="b" name="show-graph">
+			<default>false</default>
+			<summary>Show graph for CPU/RAM in Wingpanel</summary>
+			<description></description>
+		</key>
     <key type="b" name="show-icon">
 			<default>false</default>
 			<summary>Show sys-monitor icon in Wingpanel</summary>

@@ -12,6 +12,7 @@ wingpanel_dep = dependency('wingpanel-2.0')
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
+    'src/Services/BackgroundManager.vala',
     'src/Services/CPU.vala',
     'src/Services/Net.vala',
     'src/Services/Memory.vala',
@@ -22,6 +23,7 @@ shared_module(
     'src/Widgets/MainView.vala',
     'src/Widgets/SettingsView.vala',
     'src/Widgets/DisplayWidget.vala',
+    'src/Widgets/SysGraph.vala',
     link_args : ['-lm', '-nostartfiles'],
     name_prefix: '',
     dependencies: [
