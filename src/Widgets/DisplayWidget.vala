@@ -24,7 +24,7 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     
     private Gtk.Label cpu_label;
     private Gtk.Label cpu_desr;
-    private SysMonitor.Widgets.SysGraph cpu_graph;
+    private SysMonitor.Widgets.SysLineGraph cpu_graph;
     private Gtk.Label ram_label;
     private Gtk.Label ram_desr;
     private SysMonitor.Widgets.SysGraph ram_graph;
@@ -53,7 +53,7 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         settings = SysMonitor.Services.SettingsManager.get_default ();
         icon = new Gtk.Image.from_icon_name ("utilities-system-monitor-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label ("CPU");
-        cpu_graph = new SysMonitor.Widgets.SysGraph(14, Gtk.IconSize.MENU);
+        cpu_graph = new SysMonitor.Widgets.SysLineGraph(40, Gtk.IconSize.MENU);
         cpu_desr = new Gtk.Label ("CPU");
         ram_label = new Gtk.Label ("MEM");
         ram_graph = new SysMonitor.Widgets.SysGraph(14, Gtk.IconSize.MENU);
