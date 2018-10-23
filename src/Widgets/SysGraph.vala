@@ -33,6 +33,7 @@ public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
     public SysGraph (int target_width, int target_height) {
         set_size_request (target_width, target_height);
         current_percent = 0;
+        Services.BackgroundManager.get_default ().background_state_changed.connect (update_background);
     }
      
     public override bool draw (Cairo.Context cr) {
@@ -68,5 +69,50 @@ public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
         var region = window.get_clip_region ();
         // redraw the cairo canvas completely by exposing it
         window.invalidate_region (region, true);
+    }
+    
+    private void update_background (Services.BackgroundState state, uint animation_duration) {
+        // Update color of percentage bar and stroke
+        switch (state) {
+            case Services.BackgroundState.DARK:
+            case Services.BackgroundState.TRANSLUCENT_DARK:
+            {
+                // Light Wingpanel background
+                bg_color = {1.0, 1.0, 1.0, 1.0};
+                pecent_color = {0.0, 0.0, 0.0, 1.0};
+                stroke_color = {0.5, 0.5, 0.5, 0.5};
+                break;
+            }
+            case Services.BackgroundState.MAXIMIZED:
+            case Services.BackgroundState.LIGHT:
+            case Services.BackgroundState.TRANSLUCENT_LIGHT:
+            {
+                // Dark Wingpanel background
+                bg_color = {0.0, 0.0, 0.0, 1.0};
+                pecent_color = {1.0, 1.0, 1.0, 1.0};
+                stroke_color = {0.5, 0.5, 0.5, 0.5};
+                break;
+            }
+        }
+        
+        switch (state) {
+            case Services.BackgroundState.DARK :
+            case Services.BackgroundState.MAXIMIZED:
+            case Services.BackgroundState.LIGHT:
+            {
+                // Transperent background
+                bg_color[3] = 0.0;
+                break;
+            }
+            case Services.BackgroundState.TRANSLUCENT_DARK:
+            case Services.BackgroundState.TRANSLUCENT_LIGHT:
+            {
+                // Translucent background
+                bg_color[3] = 0.5;
+                break;
+            }
+        }
+        
+        redraw_canvas ();
     }
 }
