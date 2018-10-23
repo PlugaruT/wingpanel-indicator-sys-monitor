@@ -19,66 +19,15 @@
  * Authored by: Tudor Plugaru <plugaru.tudor@gmail.com>
  */
 
-public class SysGraph : Gtk.DrawingArea {
-
-    private int _current_percent;
-    public int current_percent { 
-        set {_current_percent=value; redraw_canvas();} 
-        get {return _current_percent;} 
-    }
-
-    public SysGraph (int target_width, int target_height) {
-        set_size_request (target_width, target_height);
-        current_percent = 0;
-    }
-     
-    public override bool draw (Cairo.Context cr) {
-        int width = get_allocated_width ();
-        int height = get_allocated_height ();
-        
-        // Background
-        cr.set_source_rgb (0,0,0);
-        cr.rectangle (0, 0, width, height);
-        cr.fill ();
-        
-        // Percentage
-        var percent_height = (int) (((double)current_percent/100.0) * height);
-        var px = 0;
-        var py = height-percent_height;
-        cr.set_source_rgb (1,1,1);
-        cr.rectangle (px, py, width, percent_height);
-        cr.fill ();
-        
-        // Border
-        cr.set_source_rgb (0.2, 0.2, 0.2);
-        cr.rectangle (0, 0, width, height);
-        cr.stroke ();
-        
-        return false;
-    }
-    
-    private void redraw_canvas () {
-        var window = get_window ();
-        if (null == window) {
-            return;
-        }
-
-        var region = window.get_clip_region ();
-        // redraw the cairo canvas completely by exposing it
-        window.invalidate_region (region, true);
-        window.process_updates (true);
-    }
-}
-
 public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     private SysMonitor.Services.SettingsManager settings;
     
     private Gtk.Label cpu_label;
     private Gtk.Label cpu_desr;
-    private SysGraph cpu_graph;
+    private SysMonitor.Widgets.SysGraph cpu_graph;
     private Gtk.Label ram_label;
     private Gtk.Label ram_desr;
-    private SysGraph ram_graph;
+    private SysMonitor.Widgets.SysGraph ram_graph;
     private Gtk.Label network_down_label;
     private Gtk.Label network_up_label;
     private Gtk.Image icon;
@@ -104,12 +53,10 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         settings = SysMonitor.Services.SettingsManager.get_default ();
         icon = new Gtk.Image.from_icon_name ("utilities-system-monitor-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label ("CPU");
-        // cpu_graph = new Gtk.Label ("CPU");
-        cpu_graph = new SysGraph(14, Gtk.IconSize.MENU);
+        cpu_graph = new SysMonitor.Widgets.SysGraph(14, Gtk.IconSize.MENU);
         cpu_desr = new Gtk.Label ("CPU");
         ram_label = new Gtk.Label ("MEM");
-        // ram_graph = new Gtk.Label ("MEM");
-        ram_graph = new SysGraph(14, Gtk.IconSize.MENU);
+        ram_graph = new SysMonitor.Widgets.SysGraph(14, Gtk.IconSize.MENU);
         ram_desr = new Gtk.Label ("MEM");
         network_down_label = new Gtk.Label ("DOWN");
         network_down_label.set_width_chars (8);

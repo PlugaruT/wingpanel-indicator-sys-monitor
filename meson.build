@@ -22,6 +22,7 @@ shared_module(
     'src/Widgets/MainView.vala',
     'src/Widgets/SettingsView.vala',
     'src/Widgets/DisplayWidget.vala',
+    'src/Widgets/SysGraph.vala',
     link_args : ['-lm', '-nostartfiles'],
     name_prefix: '',
     dependencies: [
