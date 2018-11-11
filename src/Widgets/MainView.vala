@@ -31,6 +31,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         orientation = Gtk.Orientation.HORIZONTAL;
         hexpand = true;
         column_spacing = 40; // to add space between label and value label
+        row_spacing = 2;
     }
 
     construct {
@@ -49,6 +50,10 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         var uptime_label = create_name_label (_ ("Uptime:"));
         var network_label = create_name_label (_ ("Network:"));
 
+
+        halign = Gtk.Align.CENTER;
+        valign = Gtk.Align.CENTER;
+
         attach (freq_label,         1, 0, 1, 1);
         attach (freq_value_label,   2, 0, 1, 1);
         attach (ram_label,          1, 1, 1, 1);
@@ -64,7 +69,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
     private Gtk.Label create_name_label (string label_name) {
         var label = new Gtk.Label (label_name);
         label.halign = Gtk.Align.START;
-        label.get_style_context ().add_class ("menuitem");
+        label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
         label.margin_start = 9;
         return label;
     }
@@ -94,7 +99,9 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
     }
 
     public void update_net_speed (int bytes_out, int bytes_in) {
-        network_value_label.set_label ("D: " + SysMonitor.Services.Utils.format_net_speed (bytes_in, false) + " \nU: " + SysMonitor.Services.Utils.format_net_speed(bytes_out, false));
+        var download = SysMonitor.Services.Utils.format_net_speed (bytes_in, false);
+        var upload = SysMonitor.Services.Utils.format_net_speed(bytes_out, false);
+        network_value_label.set_label ("D: " + download + " \nU: " + upload);
     }
 }
 
