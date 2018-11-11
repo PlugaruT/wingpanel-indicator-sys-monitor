@@ -40,4 +40,8 @@ sudo ninja install
 ## Arch Linux
 Arch Linux users can find Wingpanel Indicator Sys Monitor under the name [wingpanel-indicator-sys-monitor-git](https://aur.archlinux.org/packages/wingpanel-indicator-sys-monitor-git/) in the **AUR**:
 
-`$ aurman -S wingpanel-indicator-sys-monitor-git`
+`aurman -S wingpanel-indicator-sys-monitor-git`
+
+### Notes
+
+ - Special thanks for [@RyanDam](https://github.com/RyanDam/) for the graph implementation!
