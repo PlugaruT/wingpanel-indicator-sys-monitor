@@ -65,13 +65,13 @@ namespace SysMonitor.Services {
         }
 
         private BackgroundManager () {
-            // TODO: Fix this
-            // PanelSettings.get_default ().notify["use-transparency"].connect (() => {
-            //     use_transparency = PanelSettings.get_default ().use_transparency;
-            //     state_updated ();
-            // });
+            //  // TODO: Fix this
+            //  PanelSettings.get_default ().notify["use-transparency"].connect (() => {
+            //      use_transparency = PanelSettings.get_default ().use_transparency;
+            //      state_updated ();
+            //  });
 
-            // use_transparency = PanelSettings.get_default ().use_transparency;
+            //  use_transparency = PanelSettings.get_default ().use_transparency;
             use_transparency = true;
 
             Bus.watch_name (BusType.SESSION, DBUS_NAME, BusNameWatcherFlags.NONE,

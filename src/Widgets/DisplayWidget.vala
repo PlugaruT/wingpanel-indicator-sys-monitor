@@ -138,13 +138,11 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
 
     public void set_cpu (int cpu_usage) {
         cpu_label.set_label (this.format_int (cpu_usage));
-        // cpu_graph.set_label (this.get_percent_progress_string (cpu_usage));
         cpu_graph.current_percent = cpu_usage;
     }
 
     public void set_ram (int ram_usage) {
         ram_label.set_label (this.format_int (ram_usage));
-        // ram_graph.set_label (this.get_percent_progress_string (ram_usage));
         ram_graph.current_percent = ram_usage;
     }
 
