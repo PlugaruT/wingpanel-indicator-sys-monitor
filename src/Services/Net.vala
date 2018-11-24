@@ -35,11 +35,11 @@ public class SysMonitor.Services.Net  : GLib.Object {
         control = false;
     }
 
-    public int[] get_bytes() {
-        if(control == false){
+    public int[] get_bytes () {
+        if (control == false) {
             control = true;
             update_bytes_total ();
-        }else{
+        } else  {
             control = false;
         }
         int[] ret;
@@ -56,18 +56,16 @@ public class SysMonitor.Services.Net  : GLib.Object {
         var n_bytes_in = 0;
         for (uint j = 0; j < netlist.number; ++j) {
             var device = devices[j];
-            if(device != "lo" && device.substring (0, 3) != "tun"){
+            if (device != "lo" && device.substring (0, 3) != "tun") {
                 GTop.get_netload (out netload, device);
 
-                n_bytes_out += (int) netload.bytes_out;
-                n_bytes_in += (int) netload.bytes_in;
+                n_bytes_out += (int)netload.bytes_out;
+                n_bytes_in += (int)netload.bytes_in;
             }
         }
         _bytes_out = (n_bytes_out - _bytes_out_old) / 1;
         _bytes_in = (n_bytes_in - _bytes_in_old) / 1;
         _bytes_out_old = n_bytes_out;
         _bytes_in_old = n_bytes_in;
-
     }
-
 }

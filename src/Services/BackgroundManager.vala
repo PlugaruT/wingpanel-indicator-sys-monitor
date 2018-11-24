@@ -16,9 +16,8 @@
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301 USA.
  */
- 
-namespace SysMonitor.Services {
 
+namespace SysMonitor.Services {
     public enum BackgroundState {
         LIGHT,
         DARK,
@@ -41,9 +40,9 @@ namespace SysMonitor.Services {
         private const string DBUS_NAME = "org.pantheon.gala.WingpanelInterface";
         private const string DBUS_PATH = "/org/pantheon/gala/WingpanelInterface";
 
-        private static BackgroundManager? instance = null;
+        private static BackgroundManager ? instance = null;
 
-        private InterfaceBus? bus = null;
+        private InterfaceBus ? bus = null;
 
         private BackgroundState current_state = BackgroundState.LIGHT;
         private bool use_transparency = true;
@@ -76,8 +75,8 @@ namespace SysMonitor.Services {
             use_transparency = true;
 
             Bus.watch_name (BusType.SESSION, DBUS_NAME, BusNameWatcherFlags.NONE,
-                () => connect_dbus (),
-                () => bus = null);
+                            () => connect_dbus (),
+                            () => bus = null);
         }
 
         public void remember_window () {

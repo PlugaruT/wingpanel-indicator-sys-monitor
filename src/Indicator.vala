@@ -44,7 +44,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
 
         visible = true;
 
-            update ();
+        update ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -77,13 +77,13 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     private void update () {
         if (display_widget != null) {
             Timeout.add_seconds (1, () => {
-                                     display_widget.set_cpu (cpu.percentage_used);
-                                     display_widget.set_ram (memory.percentage_used);
-                                     var bytes = net.get_bytes();
-                                     display_widget.set_network (bytes[0], bytes[1]);
-                                     update_popover_widget_data ();
-                                     return true;
-                                 });
+                display_widget.set_cpu (cpu.percentage_used);
+                display_widget.set_ram (memory.percentage_used);
+                var bytes = net.get_bytes ();
+                display_widget.set_network (bytes[0], bytes[1]);
+                update_popover_widget_data ();
+                return true;
+            });
         }
     }
 
@@ -92,13 +92,13 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         popover_widget.update_swap_info (memory.used_swap, memory.total_swap);
         popover_widget.update_freq_info (cpu.frequency);
         popover_widget.update_uptime_info (system.uptime);
-        var bytes = net.get_bytes();
+        var bytes = net.get_bytes ();
         popover_widget.update_net_speed (bytes[0], bytes[1]);
     }
 }
 
 public Wingpanel.Indicator ? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
-        debug ("Loading system monitor indicator");
+    debug ("Loading system monitor indicator");
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         debug ("Wingpanel is not in session, not loading sys-monitor");

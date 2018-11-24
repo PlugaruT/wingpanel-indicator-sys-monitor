@@ -39,7 +39,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         swap_value_label = create_value_label ();
         freq_value_label = create_value_label ();
         uptime_value_label = create_value_label ();
-        
+
         network_value_label = create_value_label ();
         network_value_label.set_width_chars (10);
         network_value_label.set_justify (Gtk.Justification.FILL);
@@ -54,15 +54,15 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
         halign = Gtk.Align.CENTER;
         valign = Gtk.Align.CENTER;
 
-        attach (freq_label,         1, 0, 1, 1);
-        attach (freq_value_label,   2, 0, 1, 1);
-        attach (ram_label,          1, 1, 1, 1);
-        attach (ram_value_label,    2, 1, 1, 1);
-        attach (swap_label,         1, 2, 1, 1);
-        attach (swap_value_label,   2, 2, 1, 1);
-        attach (uptime_label,       1, 3, 1, 1);
-        attach (uptime_value_label, 2, 3, 1, 1);
-        attach (network_label,       1, 4, 1, 1);
+        attach (         freq_label, 1, 0, 1, 1);
+        attach (   freq_value_label, 2, 0, 1, 1);
+        attach (          ram_label, 1, 1, 1, 1);
+        attach (    ram_value_label, 2, 1, 1, 1);
+        attach (         swap_label, 1, 2, 1, 1);
+        attach (   swap_value_label, 2, 2, 1, 1);
+        attach (       uptime_label, 1, 3, 1, 1);
+        attach ( uptime_value_label, 2, 3, 1, 1);
+        attach (      network_label, 1, 4, 1, 1);
         attach (network_value_label, 2, 4, 1, 1);
     }
 
@@ -89,7 +89,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
     public void update_swap (double used_swap, double total_swap) {
         swap_value_label.set_label ("%s / %s".printf (SysMonitor.Services.Utils.format_size (used_swap), SysMonitor.Services.Utils.format_size (total_swap)));
     }
-	
+
     public void update_freq (double frequency) {
         freq_value_label.set_label (SysMonitor.Services.Utils.format_frequency (frequency));
     }
@@ -100,7 +100,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Grid {
 
     public void update_net_speed (int bytes_out, int bytes_in) {
         var download = SysMonitor.Services.Utils.format_net_speed (bytes_in, false);
-        var upload = SysMonitor.Services.Utils.format_net_speed(bytes_out, false);
+        var upload = SysMonitor.Services.Utils.format_net_speed (bytes_out, false);
         network_value_label.set_label ("D: " + download + " \nU: " + upload);
     }
 }
