@@ -42,7 +42,7 @@ public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
         var percent_height = (int)(((double)current_percent / 100.0) * height);
         var px = 0;
         var py = height - percent_height;
-        cr.set_source_rgb (value_color[0], value_color[1], value_color[2]);
+        cr.set_source_rgba (value_color[0], value_color[1], value_color[2], value_color[3]);
         cr.rectangle (px, py, width, percent_height);
         cr.fill ();
 
@@ -65,14 +65,7 @@ public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
         case Services.BackgroundState.DARK :
         case Services.BackgroundState.TRANSLUCENT_DARK : {
             // Light Wingpanel background
-            value_color = {1.0, 1.0, 1.0};
-            break;
-        }
-        case Services.BackgroundState.MAXIMIZED :
-        case Services.BackgroundState.LIGHT :
-        case Services.BackgroundState.TRANSLUCENT_LIGHT : {
-            // Dark Wingpanel background
-            value_color = {0.0, 0.0, 0.0};
+            value_color = {1.0, 1.0, 1.0, 0.85};
             break;
         }
         }
@@ -107,7 +100,7 @@ public class SysMonitor.Widgets.SysLineGraph : SysMonitor.Widgets.SysGraph {
         int yb = height;
 
         int last_x = xb;
-        cr.set_source_rgb (value_color[0], value_color[1], value_color[2]);
+        cr.set_source_rgba (value_color[0], value_color[1], value_color[2], value_color[3]);
         cr.move_to (xb, yb);
         if (_queue.length > 0) {
             for (int i=0; i<_queue.length; i++) {

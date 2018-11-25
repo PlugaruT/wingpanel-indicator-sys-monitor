@@ -44,7 +44,7 @@ namespace SysMonitor.Services {
 
         private InterfaceBus ? bus = null;
 
-        private BackgroundState current_state = BackgroundState.LIGHT;
+        private BackgroundState current_state = BackgroundState.DARK;
         private bool use_transparency = true;
 
         private bool bus_available {
@@ -72,7 +72,6 @@ namespace SysMonitor.Services {
             //  });
 
             //  use_transparency = PanelSettings.get_default ().use_transparency;
-            use_transparency = true;
 
             Bus.watch_name (BusType.SESSION, DBUS_NAME, BusNameWatcherFlags.NONE,
                             () => connect_dbus (),

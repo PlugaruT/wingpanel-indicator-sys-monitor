@@ -19,89 +19,66 @@
  * Authored by: Tudor Plugaru <plugaru.tudor@gmail.com>
  */
 
-public class SysMonitor.Widgets.MainView : Gtk.Grid {
-    private Gtk.Label ram_value_label;
-    private Gtk.Label swap_value_label;
-    private Gtk.Label freq_value_label;
-    private Gtk.Label uptime_value_label;
-    private Gtk.Label network_value_label;
+public class SysMonitor.Widgets.MainView : Gtk.Box {
+    private SysMonitor.Widgets.MainViewRow ram_row;
+    private SysMonitor.Widgets.MainViewRow swap_row;
+    private SysMonitor.Widgets.MainViewRow freq_row;
+    private SysMonitor.Widgets.MainViewRow uptime_row;
+    private SysMonitor.Widgets.MainViewRow network_up_row;
+    private SysMonitor.Widgets.MainViewRow network_down_row;
 
     public MainView () {
         name = "main";
-        orientation = Gtk.Orientation.HORIZONTAL;
-        hexpand = true;
-        column_spacing = 40; // to add space between label and value label
-        row_spacing = 2;
+        valign = Gtk.Align.CENTER;
+        orientation = Gtk.Orientation.VERTICAL;
     }
 
     construct {
-        ram_value_label = create_value_label ();
-        swap_value_label = create_value_label ();
-        freq_value_label = create_value_label ();
-        uptime_value_label = create_value_label ();
+        ram_row = new SysMonitor.Widgets.MainViewRow (_ ("Ram:"));
+        swap_row = new SysMonitor.Widgets.MainViewRow (_ ("Swap:"));
+        freq_row = new SysMonitor.Widgets.MainViewRow (_ ("Frequency:"));
+        uptime_row = new SysMonitor.Widgets.MainViewRow (_ ("Uptime:"));
 
-        network_value_label = create_value_label ();
-        network_value_label.set_width_chars (10);
-        network_value_label.set_justify (Gtk.Justification.FILL);
+        network_up_row = new SysMonitor.Widgets.MainViewRow (_ ("Network Up"));
+        network_up_row.set_value_label_char_width (10);
 
-        var ram_label = create_name_label (_ ("Ram:"));
-        var swap_label = create_name_label (_ ("Swap:"));
-        var freq_label = create_name_label (_ ("Frequency:"));
-        var uptime_label = create_name_label (_ ("Uptime:"));
-        var network_label = create_name_label (_ ("Network:"));
+        network_down_row = new SysMonitor.Widgets.MainViewRow (_ ("Network Down"));
+        network_down_row.set_value_label_char_width (10);
 
-
-        halign = Gtk.Align.CENTER;
-        valign = Gtk.Align.CENTER;
-
-        attach (         freq_label, 1, 0, 1, 1);
-        attach (   freq_value_label, 2, 0, 1, 1);
-        attach (          ram_label, 1, 1, 1, 1);
-        attach (    ram_value_label, 2, 1, 1, 1);
-        attach (         swap_label, 1, 2, 1, 1);
-        attach (   swap_value_label, 2, 2, 1, 1);
-        attach (       uptime_label, 1, 3, 1, 1);
-        attach ( uptime_value_label, 2, 3, 1, 1);
-        attach (      network_label, 1, 4, 1, 1);
-        attach (network_value_label, 2, 4, 1, 1);
-    }
-
-    private Gtk.Label create_name_label (string label_name) {
-        var label = new Gtk.Label (label_name);
-        label.halign = Gtk.Align.START;
-        label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
-        label.margin_start = 9;
-        return label;
-    }
-
-    private Gtk.Label create_value_label (string label_name="") {
-        var label = new Gtk.Label (label_name);
-        label.halign = Gtk.Align.END;
-        label.get_style_context ().add_class ("menuitem");
-        label.margin_end = 9;
-        return label;
+        add (         ram_row);
+        add (        swap_row);
+        add (        freq_row);
+        add (      uptime_row);
+        add (  network_up_row);
+        add (network_down_row);
     }
 
     public void update_ram (double used_ram, double total_ram) {
-        ram_value_label.set_label ("%s / %s".printf (SysMonitor.Services.Utils.format_size (used_ram), SysMonitor.Services.Utils.format_size (total_ram)));
+        var used = SysMonitor.Services.Utils.format_size (used_ram);
+        var total = SysMonitor.Services.Utils.format_size (total_ram);
+        ram_row.update_value ("%s / %s".printf (used, total));
     }
 
     public void update_swap (double used_swap, double total_swap) {
-        swap_value_label.set_label ("%s / %s".printf (SysMonitor.Services.Utils.format_size (used_swap), SysMonitor.Services.Utils.format_size (total_swap)));
+        var used = SysMonitor.Services.Utils.format_size (used_swap);
+        var total = SysMonitor.Services.Utils.format_size (total_swap);
+        swap_row.update_value ("%s / %s".printf (used, total));
     }
 
     public void update_freq (double frequency) {
-        freq_value_label.set_label (SysMonitor.Services.Utils.format_frequency (frequency));
+        var val = SysMonitor.Services.Utils.format_frequency (frequency);
+        freq_row.update_value (val);
     }
 
     public void update_uptime (string uptime) {
-        uptime_value_label.set_label (uptime);
+        uptime_row.update_value (uptime);
     }
 
     public void update_net_speed (int bytes_out, int bytes_in) {
         var download = SysMonitor.Services.Utils.format_net_speed (bytes_in, false);
         var upload = SysMonitor.Services.Utils.format_net_speed (bytes_out, false);
-        network_value_label.set_label ("D: " + download + " \nU: " + upload);
+        network_down_row.update_value (download);
+        network_up_row.update_value (upload);
     }
 }
 
