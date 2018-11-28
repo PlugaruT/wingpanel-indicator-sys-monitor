@@ -24,13 +24,11 @@ public class SysMonitor.Widgets.MainViewRow : Gtk.Grid {
     private Gtk.Label value_label;
 
     public MainViewRow (string text, string val="") {
-        //  hexpand = true;
-        //  halign = Gtk.Align.FILL;
-        //  valign = Gtk.Align.CENTER;
-
+        hexpand = true;
 
         text_label = new Gtk.Label (text);
         text_label.halign = Gtk.Align.START;
+        text_label.hexpand = true;
         text_label.margin_start = 9;
         text_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
