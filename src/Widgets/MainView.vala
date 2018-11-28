@@ -45,9 +45,9 @@ public class SysMonitor.Widgets.MainView : Gtk.Box {
         network_down_row = new SysMonitor.Widgets.MainViewRow (_ ("Network Down"));
         network_down_row.set_value_label_char_width (10);
 
+        add (        freq_row);
         add (         ram_row);
         add (        swap_row);
-        add (        freq_row);
         add (      uptime_row);
         add (  network_up_row);
         add (network_down_row);
