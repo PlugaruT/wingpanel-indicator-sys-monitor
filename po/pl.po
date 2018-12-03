@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sys-monitor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-17 22:22+0300\n"
+"POT-Creation-Date: 2018-11-28 22:04+0200\n"
 "PO-Revision-Date: 2018-03-07 15:09+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,22 +18,22 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: src/Indicator.vala:15
+#: src/Indicator.vala:36
 msgid "Sys-Monitor"
 msgstr ""
 
-#: src/Indicator.vala:16
+#: src/Indicator.vala:37
 msgid "System monitor indicator that display CPU and RAM usage in wingpanel"
 msgstr ""
 
-#: src/Widgets/PopoverWidget.vala:19
+#: src/Widgets/PopoverWidget.vala:40
 msgid "Main"
 msgstr ""
 
-#: src/Widgets/PopoverWidget.vala:20
+#: src/Widgets/PopoverWidget.vala:41
 msgid "Settings"
 msgstr ""
 
-#: src/Widgets/PopoverWidget.vala:31
+#: src/Widgets/PopoverWidget.vala:52
 msgid "Quit"
 msgstr ""

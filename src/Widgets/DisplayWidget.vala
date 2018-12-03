@@ -53,9 +53,11 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         settings = SysMonitor.Services.SettingsManager.get_default ();
         icon = new Gtk.Image.from_icon_name ("utilities-system-monitor-symbolic", Gtk.IconSize.MENU);
         cpu_label = new Gtk.Label ("CPU");
+        cpu_label.set_width_chars (4);
         cpu_graph = new SysMonitor.Widgets.SysLineGraph (40, Gtk.IconSize.MENU);
         cpu_desr = new Gtk.Label ("CPU");
         ram_label = new Gtk.Label ("MEM");
+        ram_label.set_width_chars (4);
         ram_graph = new SysMonitor.Widgets.SysGraph (14, Gtk.IconSize.MENU);
         ram_desr = new Gtk.Label ("MEM");
         network_down_label = new Gtk.Label ("DOWN");
@@ -137,14 +139,12 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     public void set_cpu (int cpu_usage) {
-        cpu_label.set_label (this.format_int (cpu_usage));
-        // cpu_graph.set_label (this.get_percent_progress_string (cpu_usage));
+        cpu_label.set_label (cpu_usage.to_string () + "%");
         cpu_graph.current_percent = cpu_usage;
     }
 
     public void set_ram (int ram_usage) {
-        ram_label.set_label (this.format_int (ram_usage));
-        // ram_graph.set_label (this.get_percent_progress_string (ram_usage));
+        ram_label.set_label (ram_usage.to_string () + "%");
         ram_graph.current_percent = ram_usage;
     }
 
@@ -183,14 +183,6 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
 
     private void update_icon_revealer () {
         icon_revealer.reveal_child = settings.show_icon;
-    }
-
-    private string format_int (int number) {
-        if (number < 10) {
-            return "0%i%%".printf (number);
-        } else {
-            return "%i%%".printf (number);
-        }
     }
 }
 

@@ -20,9 +20,7 @@
  */
 
 public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
-    protected double[] bg_color = {0.0, 0.0, 0.0, 1.0};
-    protected double[] pecent_color = {1.0, 1.0, 1.0, 1.0};
-    protected double[] stroke_color = {0.2, 0.2, 0.2, 1.0};
+    protected double[] value_color = {1.0, 1.0, 1.0};
 
     protected int _current_percent;
     public int current_percent {
@@ -40,23 +38,13 @@ public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
         int width = get_allocated_width ();
         int height = get_allocated_height ();
 
-        // Background
-        cr.set_source_rgba (bg_color[0],bg_color[1],bg_color[2],bg_color[3]);
-        cr.rectangle (0, 0, width, height);
-        cr.fill ();
-
         // Percentage
-        var percent_height = (int)(((double)current_percent/100.0) * height);
+        var percent_height = (int)(((double)current_percent / 100.0) * height);
         var px = 0;
-        var py = height-percent_height;
-        cr.set_source_rgba (pecent_color[0],pecent_color[1],pecent_color[2],pecent_color[3]);
+        var py = height - percent_height;
+        cr.set_source_rgba (value_color[0], value_color[1], value_color[2], value_color[3]);
         cr.rectangle (px, py, width, percent_height);
         cr.fill ();
-
-        // Border
-        cr.set_source_rgba (stroke_color[0],stroke_color[1],stroke_color[2],stroke_color[3]);
-        cr.rectangle (0, 0, width, height);
-        cr.stroke ();
 
         return false;
     }
@@ -77,38 +65,10 @@ public class SysMonitor.Widgets.SysGraph : Gtk.DrawingArea {
         case Services.BackgroundState.DARK :
         case Services.BackgroundState.TRANSLUCENT_DARK : {
             // Light Wingpanel background
-            bg_color = {1.0, 1.0, 1.0, 1.0};
-            pecent_color = {0.0, 0.0, 0.0, 1.0};
-            stroke_color = {0.5, 0.5, 0.5, 0.5};
-            break;
-        }
-        case Services.BackgroundState.MAXIMIZED :
-        case Services.BackgroundState.LIGHT :
-        case Services.BackgroundState.TRANSLUCENT_LIGHT : {
-            // Dark Wingpanel background
-            bg_color = {0.0, 0.0, 0.0, 1.0};
-            pecent_color = {1.0, 1.0, 1.0, 1.0};
-            stroke_color = {0.5, 0.5, 0.5, 0.5};
+            value_color = {1.0, 1.0, 1.0, 0.85};
             break;
         }
         }
-
-        switch (state) {
-        case Services.BackgroundState.DARK :
-        case Services.BackgroundState.MAXIMIZED :
-        case Services.BackgroundState.LIGHT : {
-            // Transperent background
-            bg_color[3] = 0.0;
-            break;
-        }
-        case Services.BackgroundState.TRANSLUCENT_DARK :
-        case Services.BackgroundState.TRANSLUCENT_LIGHT : {
-            // Translucent background
-            bg_color[3] = 0.5;
-            break;
-        }
-        }
-
         redraw_canvas ();
     }
 }
@@ -136,33 +96,23 @@ public class SysMonitor.Widgets.SysLineGraph : SysMonitor.Widgets.SysGraph {
         int width = get_allocated_width ();
         int height = get_allocated_height ();
 
-        // Background
-        cr.set_source_rgba (bg_color[0],bg_color[1],bg_color[2],bg_color[3]);
-        cr.rectangle (0, 0, width, height);
-        cr.fill ();
-
         int xb = width;
         int yb = height;
 
         int last_x = xb;
-        cr.set_source_rgba (pecent_color[0],pecent_color[1],pecent_color[2],pecent_color[3]);
+        cr.set_source_rgba (value_color[0], value_color[1], value_color[2], value_color[3]);
         cr.move_to (xb, yb);
         if (_queue.length > 0) {
             for (int i=0; i<_queue.length; i++) {
-                var percent_height = (int)(((double)_queue.peek_nth (i)/100.0) * height);
+                var percent_height = (int)(((double)_queue.peek_nth (i) / 100.0) * height);
                 var px = last_x - 1;
-                var py = height-percent_height;
+                var py = height - percent_height;
                 cr.line_to (px, py);
                 last_x = px;
             }
         }
         cr.line_to (last_x, height);
         cr.fill ();
-
-        // Border
-        cr.set_source_rgba (stroke_color[0],stroke_color[1],stroke_color[2],stroke_color[3]);
-        cr.rectangle (0, 0, width, height);
-        cr.stroke ();
 
         return false;
     }

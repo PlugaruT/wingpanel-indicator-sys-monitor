@@ -21,6 +21,7 @@ shared_module(
     'src/Services/Settings.vala',
     'src/Widgets/PopoverWidget.vala',
     'src/Widgets/MainView.vala',
+    'src/Widgets/MainViewRow.vala',
     'src/Widgets/SettingsView.vala',
     'src/Widgets/DisplayWidget.vala',
     'src/Widgets/SysGraph.vala',
