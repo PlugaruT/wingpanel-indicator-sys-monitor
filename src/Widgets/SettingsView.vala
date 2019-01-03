@@ -26,6 +26,7 @@ public class SysMonitor.Widgets.SettingsView : Gtk.Grid {
     private Wingpanel.Widgets.Switch show_desr_switch;
     private Wingpanel.Widgets.Switch show_graph_switch;
     private Wingpanel.Widgets.Switch show_icon_switch;
+    private Wingpanel.Widgets.Switch network_in_bits_switch;
     private SysMonitor.Services.SettingsManager settings;
 
     public SettingsView () {
@@ -42,20 +43,23 @@ public class SysMonitor.Widgets.SettingsView : Gtk.Grid {
         show_desr_switch = new Wingpanel.Widgets.Switch (_ ("Display label"), settings.show_desr);
         show_graph_switch = new Wingpanel.Widgets.Switch (_ ("Display graph"), settings.show_graph);
         show_icon_switch = new Wingpanel.Widgets.Switch (_ ("Display icon"), settings.show_icon);
+        network_in_bits_switch = new Wingpanel.Widgets.Switch (_ ("Network in bits"), settings.network_in_bits);
 
-        settings.schema.bind ("show-ram",     show_ram_switch.get_switch (),     "active", SettingsBindFlags.DEFAULT);
-        settings.schema.bind ("show-cpu",     show_cpu_switch.get_switch (),     "active", SettingsBindFlags.DEFAULT);
-        settings.schema.bind ("show-network", show_network_switch.get_switch (), "active", SettingsBindFlags.DEFAULT);
-        settings.schema.bind ("show-desr",    show_desr_switch.get_switch (),    "active", SettingsBindFlags.DEFAULT);
-        settings.schema.bind ("show-graph",   show_graph_switch.get_switch (),   "active", SettingsBindFlags.DEFAULT);
-        settings.schema.bind ("show-icon",    show_icon_switch.get_switch (),    "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-ram",           show_ram_switch.get_switch (),          "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-cpu",           show_cpu_switch.get_switch (),          "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-network",       show_network_switch.get_switch (),      "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-desr",          show_desr_switch.get_switch (),         "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-graph",         show_graph_switch.get_switch (),        "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-icon",          show_icon_switch.get_switch (),         "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("network-in-bits",    network_in_bits_switch.get_switch (),   "active", SettingsBindFlags.DEFAULT);
 
-        attach (show_cpu_switch,     0, 1, 1, 1);
-        attach (show_ram_switch,     0, 2, 1, 1);
-        attach (show_network_switch, 0, 3, 1, 1);
-        attach (show_desr_switch,    0, 4, 1, 1);
-        attach (show_graph_switch,   0, 5, 1, 1);
-        attach (show_icon_switch,    0, 6, 1, 1);
+        attach (show_cpu_switch,        0, 1, 1, 1);
+        attach (show_ram_switch,        0, 2, 1, 1);
+        attach (show_network_switch,    0, 3, 1, 1);
+        attach (show_desr_switch,       0, 4, 1, 1);
+        attach (show_graph_switch,      0, 5, 1, 1);
+        attach (show_icon_switch,       0, 6, 1, 1);
+        attach (network_in_bits_switch, 0, 7, 1, 1);
     }
 }
 

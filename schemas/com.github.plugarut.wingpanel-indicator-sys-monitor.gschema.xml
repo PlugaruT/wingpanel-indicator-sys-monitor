@@ -31,5 +31,10 @@
 			<summary>Show sys-monitor icon in Wingpanel</summary>
 			<description></description>
 		</key>
+    <key type="b" name="network-in-bits">
+			<default>false</default>
+			<summary>Show network in bits or Bytes</summary>
+			<description></description>
+		</key>
 	</schema>
 </schemalist>
