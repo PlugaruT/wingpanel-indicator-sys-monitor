@@ -71,7 +71,7 @@ public class SysMonitor.Services.Utils  : GLib.Object {
         return pattern.printf (val);
     }
 
-    public static string format_net_speed (int bytes, bool round, bool inbits) {
+    public static string format_net_speed (int bytes, bool round, bool in_bits) {
         string[] sizes = { " B/s", "KB/s", "MB/s", "GB/s", "TB/s" };
         string[] sizes_in_bits = { " b/s", "Kb/s", "Mb/s", "Gb/s", "Tb/s" };
         double len = (double)bytes;
@@ -86,14 +86,14 @@ public class SysMonitor.Services.Utils  : GLib.Object {
             order = 0;
         }
         string unit = sizes[order];
-        if (inbits == true){
+        if (in_bits == true){
             len = len*8;
             unit = sizes_in_bits[order];
         }
         if (round == true) {
-            speed = "%3.0f %s".printf(len, unit);
+            speed = "%3.0f %s".printf (len, unit);
         } else  {
-            speed = "%3.2f %s".printf(len, unit);
+            speed = "%3.2f %s".printf (len, unit);
         }
 
         return speed;
