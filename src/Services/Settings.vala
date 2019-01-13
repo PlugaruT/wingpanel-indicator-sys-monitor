@@ -28,6 +28,7 @@ public class SysMonitor.Services.SettingsManager : Granite.Services.Settings {
     public bool show_desr { set; get; }
     public bool show_graph { set; get; }
     public bool show_icon { set; get; }
+    public bool network_in_bits { set; get; }
 
     public SettingsManager () {
         base ("com.github.plugarut.wingpanel-indicator-sys-monitor");

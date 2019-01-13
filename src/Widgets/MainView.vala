@@ -20,6 +20,8 @@
  */
 
 public class SysMonitor.Widgets.MainView : Gtk.Box {
+    private SysMonitor.Services.SettingsManager settings;
+
     private SysMonitor.Widgets.MainViewRow ram_row;
     private SysMonitor.Widgets.MainViewRow swap_row;
     private SysMonitor.Widgets.MainViewRow freq_row;
@@ -34,6 +36,8 @@ public class SysMonitor.Widgets.MainView : Gtk.Box {
     }
 
     construct {
+        settings = SysMonitor.Services.SettingsManager.get_default ();
+
         ram_row = new SysMonitor.Widgets.MainViewRow (_ ("Ram:"));
         swap_row = new SysMonitor.Widgets.MainViewRow (_ ("Swap:"));
         freq_row = new SysMonitor.Widgets.MainViewRow (_ ("Frequency:"));
@@ -75,8 +79,8 @@ public class SysMonitor.Widgets.MainView : Gtk.Box {
     }
 
     public void update_net_speed (int bytes_out, int bytes_in) {
-        var download = SysMonitor.Services.Utils.format_net_speed (bytes_in, false);
-        var upload = SysMonitor.Services.Utils.format_net_speed (bytes_out, false);
+        var download = SysMonitor.Services.Utils.format_net_speed (bytes_in, false, settings.network_in_bits);
+        var upload = SysMonitor.Services.Utils.format_net_speed (bytes_out, false, settings.network_in_bits);
         network_down_row.update_value (download);
         network_up_row.update_value (upload);
     }

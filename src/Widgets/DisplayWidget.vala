@@ -149,8 +149,8 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     public void set_network (int bytes_out, int bytes_in) {
-        network_up_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_out, true));
-        network_down_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_in, true));
+        network_up_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_out, true, settings.network_in_bits));
+        network_down_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_in, true, settings.network_in_bits));
     }
 
     private void update_cpu_revelear () {
