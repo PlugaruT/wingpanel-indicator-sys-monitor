@@ -43,8 +43,6 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
         net = new SysMonitor.Services.Net ();
 
         visible = true;
-
-        update ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -88,6 +86,7 @@ public class SysMonitor.Indicator : Wingpanel.Indicator {
     }
 
     private void update_popover_widget_data () {
+        if (popover_widget == null) return;
         popover_widget.update_ram_info (memory.used, memory.total);
         popover_widget.update_swap_info (memory.used_swap, memory.total_swap);
         popover_widget.update_freq_info (cpu.frequency);
