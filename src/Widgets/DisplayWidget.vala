@@ -154,7 +154,7 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     private void update_cpu_revelear () {
-        cpu_revealer.reveal_child = settings.show_cpu;
+        cpu_revealer.reveal_child = settings.show_cpu && settings.show_perc;
     }
 
     private void update_cpu_desr_revelear () {
@@ -166,7 +166,7 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     }
 
     private void update_ram_revealer () {
-        ram_revealer.reveal_child = settings.show_ram;
+        ram_revealer.reveal_child = settings.show_ram && settings.show_perc;
     }
 
     private void update_ram_desr_revelear () {
