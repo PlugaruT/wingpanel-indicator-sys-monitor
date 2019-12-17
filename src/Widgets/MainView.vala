@@ -28,6 +28,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Box {
     private SysMonitor.Widgets.MainViewRow uptime_row;
     private SysMonitor.Widgets.MainViewRow network_up_row;
     private SysMonitor.Widgets.MainViewRow network_down_row;
+    private SysMonitor.Widgets.MainViewRow cpu_temp_row;
 
     public MainView () {
         name = "main";
@@ -42,6 +43,7 @@ public class SysMonitor.Widgets.MainView : Gtk.Box {
         swap_row = new SysMonitor.Widgets.MainViewRow (_ ("Swap:"));
         freq_row = new SysMonitor.Widgets.MainViewRow (_ ("Frequency:"));
         uptime_row = new SysMonitor.Widgets.MainViewRow (_ ("Uptime:"));
+        cpu_temp_row = new SysMonitor.Widgets.MainViewRow (_ ("Core Temp:"));
 
         network_up_row = new SysMonitor.Widgets.MainViewRow (_ ("Network Up"));
         network_up_row.set_value_label_char_width (10);
@@ -50,11 +52,17 @@ public class SysMonitor.Widgets.MainView : Gtk.Box {
         network_down_row.set_value_label_char_width (10);
 
         add (        freq_row);
+        add (    cpu_temp_row);
         add (         ram_row);
         add (        swap_row);
         add (      uptime_row);
         add (  network_up_row);
         add (network_down_row);
+    }
+
+    public void update_cpu_temp(double cpu_temp) {
+        var temp = SysMonitor.Services.Utils.format_temp(cpu_temp);
+        cpu_temp_row.update_value(temp);
     }
 
     public void update_ram (double used_ram, double total_ram) {

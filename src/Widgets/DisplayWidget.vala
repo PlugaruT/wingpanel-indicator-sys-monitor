@@ -33,10 +33,15 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     private Gtk.Image icon;
     private Gtk.Image icon_down;
     private Gtk.Image icon_up;
+    private Gtk.Label cpu_temp_label;
+    private Gtk.Label cpu_temp_desr;
 
     private Gtk.Revealer cpu_revealer;
     private Gtk.Revealer cpu_desr_revealer;
     private Gtk.Revealer cpu_graph_revealer;
+
+    private Gtk.Revealer cpu_temp_revealer;
+    private Gtk.Revealer cpu_temp_desr_revealer;
 
     private Gtk.Revealer ram_revealer;
     private Gtk.Revealer ram_desr_revealer;
@@ -66,6 +71,9 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         network_up_label.set_width_chars (8);
         icon_down = new Gtk.Image.from_icon_name ("go-down-symbolic", Gtk.IconSize.MENU);
         icon_up = new Gtk.Image.from_icon_name ("go-up-symbolic", Gtk.IconSize.MENU);
+        cpu_temp_label = new Gtk.Label("TEMP");
+        cpu_temp_label.set_width_chars (4);
+        cpu_temp_desr = new Gtk.Label ("TEMP");
 
         cpu_revealer = new Gtk.Revealer ();
         cpu_desr_revealer = new Gtk.Revealer ();
@@ -83,6 +91,20 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
             cpu_graph_revealer.add (cpu_graph);
             cpu_revealer.add (cpu_label);
         }
+
+        cpu_temp_revealer = new Gtk.Revealer ();
+        cpu_temp_desr_revealer = new Gtk.Revealer ();
+        {
+            cpu_temp_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            cpu_temp_desr_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+
+            update_cpu_temp_revelear ();
+            update_cpu_temp_desr_revelear ();
+
+            cpu_temp_desr_revealer.add (cpu_temp_desr);
+            cpu_temp_revealer.add (cpu_temp_label);
+        }
+
 
         ram_revealer = new Gtk.Revealer ();
         ram_desr_revealer = new Gtk.Revealer ();
@@ -120,6 +142,8 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
 
         settings.changed.connect (() => {
             update_icon_revealer ();
+            update_cpu_temp_revelear ();
+            update_cpu_temp_desr_revelear ();
             update_cpu_revelear ();
             update_cpu_desr_revelear ();
             update_cpu_graph_revelear ();
@@ -136,11 +160,17 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
         add ( ram_desr_revealer);
         add (ram_graph_revealer);
         add (      ram_revealer);
+        add (cpu_temp_desr_revealer);
+        add ( cpu_temp_revealer);
     }
 
     public void set_cpu (int cpu_usage) {
         cpu_label.set_label (cpu_usage.to_string () + "%");
         cpu_graph.current_percent = cpu_usage;
+    }
+
+    public void set_cpu_temp (double cpu_temp) {
+        cpu_temp_label.set_label (cpu_temp.to_string () + "C");
     }
 
     public void set_ram (int ram_usage) {
@@ -151,6 +181,14 @@ public class SysMonitor.Widgets.DisplayWidget : Gtk.Grid {
     public void set_network (int bytes_out, int bytes_in) {
         network_up_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_out, true, settings.network_in_bits));
         network_down_label.set_label (SysMonitor.Services.Utils.format_net_speed (bytes_in, true, settings.network_in_bits));
+    }
+
+    private void update_cpu_temp_revelear () {
+        cpu_temp_revealer.reveal_child = settings.show_cpu_temp;
+    }
+
+    private void update_cpu_temp_desr_revelear () {
+        cpu_temp_desr_revealer.reveal_child = settings.show_cpu_temp && settings.show_desr;
     }
 
     private void update_cpu_revelear () {

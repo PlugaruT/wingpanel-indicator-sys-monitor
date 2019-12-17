@@ -26,12 +26,18 @@ public class SysMonitor.Services.CPU  : GLib.Object {
     private int _percentage_used;
     private double _frequency;
 
+    private double _temperature;
+
     public int percentage_used {
         get { update_percentage_used (); return _percentage_used; }
     }
 
     public double frequency {
         get { update_frequency (); return _frequency; }
+    }
+
+    public double temperature {
+        get { update_temperature (); return _temperature; }
     }
 
     public CPU () {
@@ -70,8 +76,44 @@ public class SysMonitor.Services.CPU  : GLib.Object {
         _frequency = (double)maxcur;
     }
 
+    private void update_temperature() {
+        double max_temp = 0;
+
+        var directory = File.new_for_path ("/sys/class/thermal/");
+        var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
+
+        FileInfo file_info;
+        while ((file_info = enumerator.next_file ()) != null) {
+            string value;
+            string name = file_info.get_name ();
+            try {
+                FileUtils.get_contents("/sys/class/thermal/$name/type", out value);
+
+                if (value == "x86_pkg_temp") {
+                    debug("x86_pkg_temp: %f", read_core_temp (name));
+                    max_temp = read_core_temp (name);
+                }
+            } catch (Error e) {
+                continue;
+            }
+        }
+
+        _temperature = max_temp;
+    }
+
+    private static double read_core_temp(string what) {
+        string value;
+        try {
+            FileUtils.get_contents(@"/sys/class/thermal/$what/temp", out value);
+        } catch (Error e) {
+             value = "0";
+        }
+
+        return double.parse(value) / 1000.0;
+    }
 
     private static double read (uint cpu, string what) {
+
         string value;
         try {
             FileUtils.get_contents (@"/sys/devices/system/cpu/cpu$cpu/cpufreq/$what", out value);
