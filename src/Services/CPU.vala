@@ -77,6 +77,7 @@ public class SysMonitor.Services.CPU  : GLib.Object {
     }
 
     private void update_temperature() {
+        string pattern = "x86_pkg_temp";
         double max_temp = 0;
 
         var directory = File.new_for_path ("/sys/class/thermal/");
@@ -87,10 +88,11 @@ public class SysMonitor.Services.CPU  : GLib.Object {
             string value;
             string name = file_info.get_name ();
             try {
-                FileUtils.get_contents("/sys/class/thermal/$name/type", out value);
 
-                if (value == "x86_pkg_temp") {
-                    debug("x86_pkg_temp: %f", read_core_temp (name));
+                FileUtils.get_contents(@"/sys/class/thermal/$name/type", out value);
+
+                if (value.contains(pattern)) {
+                    //debug("x86_pkg_temp: %f", read_core_temp (name));
                     max_temp = read_core_temp (name);
                 }
             } catch (Error e) {
@@ -108,6 +110,7 @@ public class SysMonitor.Services.CPU  : GLib.Object {
         } catch (Error e) {
              value = "0";
         }
+
 
         return double.parse(value) / 1000.0;
     }
