@@ -81,23 +81,27 @@ public class SysMonitor.Services.CPU  : GLib.Object {
         double max_temp = 0;
 
         var directory = File.new_for_path ("/sys/class/thermal/");
-        var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
+        try {
+            var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
 
-        FileInfo file_info;
-        while ((file_info = enumerator.next_file ()) != null) {
-            string value;
-            string name = file_info.get_name ();
-            try {
+            FileInfo file_info;
+            while ((file_info = enumerator.next_file ()) != null) {
+                string value;
+                string name = file_info.get_name ();
+                try {
 
-                FileUtils.get_contents(@"/sys/class/thermal/$name/type", out value);
+                    FileUtils.get_contents(@"/sys/class/thermal/$name/type", out value);
 
-                if (value.contains(pattern)) {
-                    //debug("x86_pkg_temp: %f", read_core_temp (name));
-                    max_temp = read_core_temp (name);
+                    if (value.contains(pattern)) {
+                        //debug("x86_pkg_temp: %f", read_core_temp (name));
+                        max_temp = read_core_temp (name);
+                    }
+                } catch (Error e) {
+                    continue;
                 }
-            } catch (Error e) {
-                continue;
             }
+        } catch (Error e) {
+            max_temp = 0;
         }
 
         _temperature = max_temp;
