@@ -1,5 +1,7 @@
 # Wingpanel System Monitor Indicator
 
+I recommend to switch to the [new implementation](https://github.com/PlugaruT/wingpanel-monitor) of this indicator as I do not plan on working on this one anymore.
+
 ![Screenshot](data/screenshot_0.png)
 ![Screenshot](data/screenshot_1.png)
 
