@@ -21,6 +21,7 @@
 
 public class SysMonitor.Widgets.SettingsView : Gtk.Grid {
     private Wingpanel.Widgets.Switch show_cpu_switch;
+    private Wingpanel.Widgets.Switch show_cpu_temp_switch;
     private Wingpanel.Widgets.Switch show_ram_switch;
     private Wingpanel.Widgets.Switch show_network_switch;
     private Wingpanel.Widgets.Switch show_desr_switch;
@@ -38,6 +39,7 @@ public class SysMonitor.Widgets.SettingsView : Gtk.Grid {
     construct {
         settings = SysMonitor.Services.SettingsManager.get_default ();
         show_cpu_switch = new Wingpanel.Widgets.Switch (_ ("Display CPU usage"), settings.show_cpu);
+        show_cpu_temp_switch = new Wingpanel.Widgets.Switch(_ ("Display CPU Temp"), settings.show_cpu_temp);
         show_ram_switch = new Wingpanel.Widgets.Switch (_ ("Display RAM usage"), settings.show_ram);
         show_network_switch = new Wingpanel.Widgets.Switch (_ ("Display Network usage"), settings.show_network);
         show_desr_switch = new Wingpanel.Widgets.Switch (_ ("Display label"), settings.show_desr);
@@ -52,14 +54,16 @@ public class SysMonitor.Widgets.SettingsView : Gtk.Grid {
         settings.schema.bind ("show-graph",         show_graph_switch.get_switch (),        "active", SettingsBindFlags.DEFAULT);
         settings.schema.bind ("show-icon",          show_icon_switch.get_switch (),         "active", SettingsBindFlags.DEFAULT);
         settings.schema.bind ("network-in-bits",    network_in_bits_switch.get_switch (),   "active", SettingsBindFlags.DEFAULT);
+        settings.schema.bind ("show-cpu-temp",      show_cpu_temp_switch.get_switch (),     "active", SettingsBindFlags.DEFAULT);
 
         attach (show_cpu_switch,        0, 1, 1, 1);
-        attach (show_ram_switch,        0, 2, 1, 1);
-        attach (show_network_switch,    0, 3, 1, 1);
-        attach (show_desr_switch,       0, 4, 1, 1);
-        attach (show_graph_switch,      0, 5, 1, 1);
-        attach (show_icon_switch,       0, 6, 1, 1);
-        attach (network_in_bits_switch, 0, 7, 1, 1);
+        attach (show_cpu_temp_switch,   0, 2, 1, 1);
+        attach (show_ram_switch,        0, 3, 1, 1);
+        attach (show_network_switch,    0, 4, 1, 1);
+        attach (show_desr_switch,       0, 5, 1, 1);
+        attach (show_graph_switch,      0, 6, 1, 1);
+        attach (show_icon_switch,       0, 7, 1, 1);
+        attach (network_in_bits_switch, 0, 8, 1, 1);
     }
 }
 

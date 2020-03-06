@@ -25,6 +25,18 @@ public class SysMonitor.Services.Utils  : GLib.Object {
 
     construct { }
 
+    public static string format_temp (double val) {
+        const string units = "{} C";
+
+        // 4 significant digits
+        var pattern = _ (units).replace ("{}",
+                                         val <   9.95 ? "%.1f" :
+                                         val <  99.5  ? "%.0f" :
+                                         val < 999.5  ? "%.0f" : "%.0f");
+
+        return pattern.printf (val);
+    }
+
     public static string format_size (double val) {
         const string[] units = {
             N_ ("{} kB"),

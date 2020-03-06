@@ -92,4 +92,8 @@ public class SysMonitor.Widgets.PopoverWidget : Gtk.Grid {
     public void update_net_speed (int bytes_in, int bytes_out) {
         main_view.update_net_speed (bytes_in, bytes_out);
     }
+
+    public void update_cpu_temp (double temp) {
+        main_view.update_cpu_temp(temp);
+    }
 }

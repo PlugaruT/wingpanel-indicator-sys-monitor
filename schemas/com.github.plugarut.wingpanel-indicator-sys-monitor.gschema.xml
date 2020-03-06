@@ -6,6 +6,11 @@
 			<summary>Show CPU load in Wingpanel</summary>
 			<description></description>
 		</key>
+	<key type="b" name="show-cpu-temp">
+		<default>true</default>
+		<summary>Show CPU temperature in Wingpanel</summary>
+		<description></description>
+	</key>
     <key type="b" name="show-ram">
 			<default>true</default>
 			<summary>Show RAM usage in Wingpanel</summary>
