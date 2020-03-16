@@ -16,6 +16,11 @@
 			<summary>Show Network usage in Wingpanel</summary>
 			<description></description>
 		</key>
+	<key type="b" name="show-perc">
+		<default>true</default>
+		<summary>Show percentage for CPU/RAM in Wingpanel</summary>
+		<description></description>
+	</key>
     <key type="b" name="show-desr">
 			<default>false</default>
 			<summary>Show label for CPU/RAM in Wingpanel</summary>
